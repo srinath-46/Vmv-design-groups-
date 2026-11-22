@@ -1,0 +1,3626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VMV Design Groups | Architecture, Construction &amp; Interior Design</title>
+  <meta name="description"
+    content="Discover VMV Design Groups for architecture, building design, construction, interior design and planning solutions for residential and commercial spaces." />
+  <meta property="og:title" content="VMV Design Groups | Architecture, Construction &amp; Interior Design" />
+  <meta property="og:description"
+    content="Discover VMV Design Groups for architecture, building design, construction, interior design and planning solutions for residential and commercial spaces." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/images/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/assets/logo/vmv-logo-transparent.png?v=2" />
+
+  <!-- Editorial Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS, Lucide Icons, and Three.js r128 -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --vmv-charcoal: #22221F;
+      --vmv-ivory: #EDE9E0;
+      --vmv-sandstone: #B5A48A;
+      --vmv-white: #FFFFFF;
+      --vmv-bg-secondary: #F6F4EF;
+      --vmv-text: #252525;
+      --vmv-muted: #555551;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--vmv-text);
+      background-color: var(--vmv-white);
+      font-size: 16.5px;
+    }
+
+    body {
+      overflow-x: clip;
+      background-color: var(--vmv-white);
+      color: #1F1F1D;
+      font-weight: 400;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Elevate light/thin weights across the website for crisp visibility */
+    .font-light {
+      font-weight: 400 !important;
+    }
+
+    /* Boost micro-labels and uppercase tracking labels for readability */
+    .tracking-\[0\.24em\],
+    .tracking-\[0\.26em\],
+    .tracking-\[0\.22em\],
+    .tracking-\[0\.2em\],
+    .tracking-\[0\.18em\],
+    .tracking-\[0\.16em\] {
+      letter-spacing: 0.16em !important;
+      font-weight: 500 !important;
+    }
+
+    /* Increase small text legibility */
+    .text-xs {
+      font-size: 0.8125rem !important;
+      line-height: 1.5 !important;
+    }
+
+    .text-sm {
+      font-size: 0.9375rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .font-serif-editorial {
+      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    }
+
+    .font-sans-body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .vmv-hero-heading {
+      font-size: clamp(2.1rem, 5.2vw, 4.85rem);
+      line-height: 1.06;
+      letter-spacing: -0.015em;
+      overflow-wrap: break-word;
+    }
+
+    .vmv-section-heading {
+      font-size: clamp(1.75rem, 3.4vw, 3.15rem);
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+      overflow-wrap: break-word;
+    }
+
+    .vmv-hero-section {
+      min-height: 100vh;
+      min-height: 100svh;
+    }
+
+    .vmv-sub-heading {
+      font-size: clamp(1.35rem, 2vw, 1.82rem);
+      line-height: 1.22;
+    }
+
+    /* Subtle architectural blueprint grid background */
+    .vmv-blueprint-grid {
+      background-image:
+        linear-gradient(to right, rgba(181, 164, 138, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(181, 164, 138, 0.14) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .vmv-blueprint-grid-dark {
+      background-image:
+        linear-gradient(to right, rgba(237, 233, 224, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(237, 233, 224, 0.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    /* Scroll reveal animations */
+    .vmv-reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .vmv-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Blueprint horizontal hairline reveal */
+    .vmv-hairline {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .vmv-reveal.is-visible .vmv-hairline,
+    .vmv-hairline.is-visible {
+      transform: scaleX(1);
+    }
+
+    /* Scroll cue */
+    @keyframes vmvScrollCue {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.55;
+      }
+
+      50% {
+        transform: translateY(6px);
+        opacity: 1;
+      }
+    }
+
+    .vmv-scroll-cue {
+      animation: vmvScrollCue 2.4s ease-in-out infinite;
+    }
+
+    /* Custom minimalist architectural range slider */
+    input[type="range"].vmv-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 2px;
+      background: rgba(181, 164, 138, 0.4);
+      outline: none;
+    }
+
+    input[type="range"].vmv-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #EDE9E0;
+      border: 1.5px solid #22221F;
+      cursor: pointer;
+    }
+
+    input[type="range"].vmv-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #EDE9E0;
+      border: 1.5px solid #22221F;
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    /* Desktop-only subtle custom architectural cursor */
+    .vmv-cursor-ring,
+    .vmv-cursor-dot {
+      display: none;
+    }
+
+    @media (pointer: fine) and (min-width: 1024px) {
+      .vmv-cursor-ring {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(181, 164, 138, 0.72);
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate3d(-100px, -100px, 0);
+        transition: width 200ms ease, height 200ms ease, border-color 200ms ease, opacity 200ms ease;
+        opacity: 0;
+      }
+
+      .vmv-cursor-ring.is-active {
+        opacity: 1;
+      }
+
+      .vmv-cursor-ring.is-hovering {
+        width: 44px;
+        height: 44px;
+        border-color: #B5A48A;
+      }
+
+      .vmv-cursor-dot {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 4px;
+        background: #B5A48A;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate3d(-100px, -100px, 0);
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      .vmv-cursor-dot.is-active {
+        opacity: 1;
+      }
+    }
+
+    /* Sticky nav scrolled state */
+    #site-header.is-scrolled {
+      background-color: rgba(26, 26, 23, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(237, 233, 224, 0.12);
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    #site-header.is-scrolled .nav-link-btn {
+      color: rgba(237, 233, 224, 0.92);
+    }
+
+    #site-header.is-scrolled .nav-link-btn:hover,
+    #site-header.is-scrolled .nav-link-btn.is-active {
+      color: #FFFFFF;
+    }
+
+    #site-header.is-scrolled .nav-cta-btn {
+      background-color: #EDE9E0;
+      color: #22221F;
+    }
+
+    #site-header.is-scrolled .nav-cta-btn:hover {
+      background-color: #FFFFFF;
+    }
+
+    #site-header.is-scrolled .nav-mobile-btn {
+      border-color: rgba(237, 233, 224, 0.4);
+      color: #FFFFFF;
+    }
+
+    .nav-link-btn .nav-underline {
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 1.5px;
+      width: 0;
+      background-color: #B5A48A;
+      transition: width 280ms ease;
+    }
+
+    .nav-link-btn:hover .nav-underline,
+    .nav-link-btn.is-active .nav-underline {
+      width: 100%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .vmv-reveal,
+      .vmv-reveal.is-visible {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .vmv-hairline {
+        transform: scaleX(1) !important;
+        transition: none !important;
+      }
+
+      .vmv-scroll-cue {
+        animation: none !important;
+      }
+
+      .vmv-cursor-ring,
+      .vmv-cursor-dot {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-[#EDE9E0] selection:text-[#22221F]">
+  <!-- Desktop-only minimalist architectural cursor -->
+  <div id="vmv-cursor-ring" class="vmv-cursor-ring" aria-hidden="true"></div>
+  <div id="vmv-cursor-dot" class="vmv-cursor-dot" aria-hidden="true"></div>
+
+  <!-- Skip link -->
+  <a href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#22221F] focus:text-[#FFFFFF] focus:px-4 focus:py-2 focus:text-sm">
+    Skip to main content
+  </a>
+
+  <!-- ======================================================================
+       STICKY NAVIGATION BAR
+  ====================================================================== -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-transparent py-4 sm:py-5">
+    <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
+      <button type="button" data-scroll-to="home"
+        class="inline-flex items-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B5A48A] shrink-0"
+        aria-label="VMV Design Groups — Return to top">
+        <img src="/assets/logo/vmv-logo-transparent.png?v=2" alt="VMV Design Groups"
+          class="h-12 sm:h-14 lg:h-16 w-auto object-contain block transition-transform duration-200 hover:scale-105" />
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav aria-label="Primary navigation" class="hidden lg:flex items-center gap-7 xl:gap-9">
+        <button type="button" data-scroll-to="home" data-nav-id="home"
+          class="nav-link-btn is-active relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          Home<span class="nav-underline"></span>
+        </button>
+        <button type="button" data-scroll-to="about" data-nav-id="about"
+          class="nav-link-btn relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          About<span class="nav-underline"></span>
+        </button>
+        <button type="button" data-scroll-to="services" data-nav-id="services"
+          class="nav-link-btn relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          Services<span class="nav-underline"></span>
+        </button>
+        <button type="button" data-scroll-to="projects" data-nav-id="projects"
+          class="nav-link-btn relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          Projects<span class="nav-underline"></span>
+        </button>
+        <button type="button" data-scroll-to="process" data-nav-id="process"
+          class="nav-link-btn relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          Our Process<span class="nav-underline"></span>
+        </button>
+        <button type="button" data-scroll-to="contact" data-nav-id="contact"
+          class="nav-link-btn relative text-[13px] xl:text-[14px] tracking-[0.14em] uppercase text-[#EDE9E0] font-medium hover:text-[#FFFFFF] py-1 transition-colors">
+          Contact<span class="nav-underline"></span>
+        </button>
+
+        <button type="button" data-scroll-to="contact" data-focus-contact="true"
+          class="nav-cta-btn vmv-magnetic ml-1 inline-flex items-center gap-2 bg-[#EDE9E0] text-[#22221F] hover:bg-[#FFFFFF] px-6 py-3 text-xs tracking-[0.16em] uppercase font-semibold transition-colors min-h-[44px]">
+          <span>Discuss Your Project</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </nav>
+
+      <!-- Mobile Hamburger Trigger -->
+      <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav-drawer"
+        aria-label="Open navigation menu"
+        class="nav-mobile-btn lg:hidden inline-flex items-center justify-center w-11 h-11 border border-[#EDE9E0]/40 text-[#FFFFFF] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B5A48A]">
+        <i id="mobile-icon-open" data-lucide="menu" class="w-5 h-5"></i>
+        <i id="mobile-icon-close" data-lucide="x" class="w-5 h-5 hidden"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-nav-drawer" aria-hidden="true"
+    class="fixed inset-0 z-40 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="mobile-nav-backdrop" class="absolute inset-0 bg-[#22221F]/65"></div>
+    <nav id="mobile-nav-panel" aria-label="Mobile navigation"
+      class="absolute top-0 right-0 h-full w-full max-w-[340px] bg-[#22221F] text-[#EDE9E0] px-6 pt-20 pb-8 flex flex-col justify-between translate-x-full transition-transform duration-300 overflow-y-auto">
+      <div>
+        <div class="pb-5 mb-3 border-b border-[#EDE9E0]/15">
+          <img src="/assets/logo/vmv-logo-transparent.png?v=2" alt="VMV Design Groups"
+            class="h-16 w-auto object-contain block" />
+        </div>
+        <div class="flex flex-col divide-y divide-[#EDE9E0]/12">
+          <button type="button" data-scroll-to="home"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">Home</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">01</span>
+          </button>
+          <button type="button" data-scroll-to="about"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">About</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">02</span>
+          </button>
+          <button type="button" data-scroll-to="services"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">Services</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">03</span>
+          </button>
+          <button type="button" data-scroll-to="projects"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">Projects</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">04</span>
+          </button>
+          <button type="button" data-scroll-to="process"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">Our Process</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">05</span>
+          </button>
+          <button type="button" data-scroll-to="contact"
+            class="mobile-nav-item flex items-center justify-between py-3.5 text-left min-h-[46px]">
+            <span class="font-serif-editorial text-2xl text-[#EDE9E0]">Contact</span>
+            <span class="text-[11px] tracking-[0.2em] text-[#B5A48A]">06</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-4 pt-6 border-t border-[#EDE9E0]/15">
+        <button type="button" data-scroll-to="contact" data-focus-contact="true"
+          class="w-full inline-flex items-center justify-center gap-2 bg-[#EDE9E0] text-[#22221F] hover:bg-[#FFFFFF] px-5 py-3.5 text-xs tracking-[0.16em] uppercase font-medium min-h-[48px]">
+          <span>Discuss Your Project</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+        <p class="text-[10px] tracking-[0.2em] uppercase text-[#B5A48A] text-center">
+          Designing Spaces. Building Futures.
+        </p>
+      </div>
+    </nav>
+  </div>
+
+  <main id="main-content">
+    <!-- ====================================================================
+         2. INTERACTIVE 3D ARCHITECTURAL HERO EXPERIENCE
+    ==================================================================== -->
+    <section id="home"
+      class="vmv-hero-section relative flex items-end lg:items-center bg-[#1B1B18] text-[#FFFFFF] overflow-hidden">
+      <!-- Static architectural fallback photo (always ready if WebGL is unavailable) -->
+      <img id="hero-fallback-img" src="/assets/images/hero.jpg"
+        alt="Illustrative contemporary architectural residence at twilight with charcoal concrete, warm sandstone and floor-to-ceiling glazing"
+        class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700" />
+
+      <!-- Live Three.js 3D Architectural Canvas -->
+      <div id="hero-3d-wrapper" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+        aria-label="Interactive 3D architectural building model. Drag to orbit or use the lighting and view controls.">
+        <canvas id="hero-3d-canvas" class="w-full h-full block"></canvas>
+      </div>
+
+
+
+      <!-- Editorial left scrim so copy stays WCAG AA+ crisp over the 3D scene -->
+      <div
+        class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1C1C19]/88 via-[#1C1C19]/52 to-transparent"
+        aria-hidden="true"></div>
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#1C1C19]/85 to-transparent"
+        aria-hidden="true"></div>
+
+      <!-- Hero Copy Overlay -->
+      <div
+        class="relative z-10 pointer-events-none max-w-[1380px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-28 pb-24 sm:pb-28 lg:py-32">
+        <div class="max-w-2xl pointer-events-auto">
+          <p
+            class="text-xs sm:text-[13px] tracking-[0.24em] uppercase text-[#EDE9E0] font-medium mb-5 flex items-center gap-3">
+            <span class="inline-block w-8 h-px bg-[#B5A48A]" aria-hidden="true"></span>
+            <span>Architecture · Design · Planning · Construction</span>
+          </p>
+
+          <h1 class="font-serif-editorial vmv-hero-heading font-normal text-[#FFFFFF] mb-6">
+            Designing Spaces.<br />
+            Building Futures.
+          </h1>
+
+          <p class="text-base sm:text-lg lg:text-[19px] leading-[1.78] text-[#F3EFE6] font-normal max-w-xl mb-9">
+            Architecture, construction and interior solutions crafted around your vision. We
+            transform ideas into meaningful spaces through thoughtful planning, innovative design
+            and quality execution.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
+            <button type="button" data-scroll-to="projects"
+              class="vmv-magnetic inline-flex items-center justify-center gap-2.5 bg-[#EDE9E0] text-[#22221F] hover:bg-[#FFFFFF] px-7 py-4 text-xs tracking-[0.16em] uppercase font-medium transition-colors min-h-[48px]">
+              <span>Explore Our Work</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button type="button" data-scroll-to="contact" data-focus-contact="true"
+              class="vmv-magnetic inline-flex items-center justify-center gap-2.5 border border-[#EDE9E0]/65 text-[#FFFFFF] hover:bg-[#FFFFFF]/10 hover:border-[#FFFFFF] px-7 py-4 text-xs tracking-[0.16em] uppercase font-medium transition-colors min-h-[48px]">
+              <span>Discuss Your Project</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtle Interactive 3D Hero Controls (Bottom Right) -->
+      <div id="hero-3d-controls"
+        class="hidden sm:flex absolute bottom-6 right-6 lg:right-10 z-30 pointer-events-auto items-center gap-2 bg-[#22221F]/90 border border-[#EDE9E0]/25 px-3 py-2 text-[10px] tracking-[0.15em] uppercase text-[#EDE9E0] shadow-2xl select-none">
+        <span class="text-[#B5A48A] pr-2 border-r border-[#EDE9E0]/18 hidden md:inline">
+          3D Architectural Study · Drag to Orbit
+        </span>
+        <div class="inline-flex items-center gap-1" role="group" aria-label="Lighting environment">
+          <button type="button" data-hero-light="daylight"
+            class="hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
+            Daylight
+          </button>
+          <button type="button" data-hero-light="golden"
+            class="hero-light-btn is-selected cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium">
+            Golden Hour
+          </button>
+          <button type="button" data-hero-light="twilight"
+            class="hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
+            Twilight
+          </button>
+        </div>
+        <div class="inline-flex items-center gap-1 pl-2 border-l border-[#EDE9E0]/18">
+          <button id="hero-wireframe-toggle" type="button"
+            class="cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75"
+            title="Toggle architectural wireframe mode">
+            Wireframe
+          </button>
+        </div>
+        <div class="inline-flex items-center gap-1 pl-2 border-l border-[#EDE9E0]/18">
+          <button id="hero-zoom-in" type="button" aria-label="Zoom in 3D building"
+            class="cursor-pointer w-7 h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
+            title="Zoom in">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+          </button>
+          <button id="hero-zoom-out" type="button" aria-label="Zoom out 3D building"
+            class="cursor-pointer w-7 h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
+            title="Zoom out">
+            <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+          </button>
+          <button id="hero-reset-cam" type="button" aria-label="Reset 3D camera view"
+            class="cursor-pointer px-2 h-7 inline-flex items-center gap-1 hover:bg-[#EDE9E0]/15 transition-colors"
+            title="Reset perspective">
+            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+            <span class="hidden xl:inline">Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Subtle Scroll Indicator -->
+      <button type="button" data-scroll-to="about" aria-label="Scroll to About section"
+        class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 inline-flex flex-col items-center gap-1 text-[#EDE9E0]/80 hover:text-[#FFFFFF] transition-colors p-2">
+        <span class="text-[10px] tracking-[0.28em] uppercase">Scroll</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-[#B5A48A] vmv-scroll-cue"></i>
+      </button>
+    </section>
+
+    <!-- ====================================================================
+         STUDIO PRACTICE SCOPE & DISCIPLINES
+    ==================================================================== -->
+    <section aria-label="Practice scope" class="border-y border-[#E8E3D8] bg-[#FAF8F5] py-9 sm:py-12">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-[#E8E3D8]">
+          <div class="md:pr-8 pt-2 md:pt-0">
+            <span class="text-xs tracking-[0.2em] uppercase text-[#8C7657] font-semibold block mb-2">Scope of
+              Practice</span>
+            <h3 class="font-serif-editorial text-2xl sm:text-[26px] text-[#1E1E1C] font-medium mb-2">Architecture &amp;
+              Master Planning</h3>
+            <p class="text-[15px] sm:text-base leading-[1.75] text-[#3A3A36]">
+              From initial zoning and spatial massing to working drawings, structural coordination, and environmental
+              site orientation.
+            </p>
+          </div>
+          <div class="md:px-8 pt-6 md:pt-0">
+            <span class="text-xs tracking-[0.2em] uppercase text-[#8C7657] font-semibold block mb-2">Execution
+              Discipline</span>
+            <h3 class="font-serif-editorial text-2xl sm:text-[26px] text-[#1E1E1C] font-medium mb-2">Turnkey
+              Construction</h3>
+            <p class="text-[15px] sm:text-base leading-[1.75] text-[#3A3A36]">
+              Disciplined on-site management ensuring structural fidelity, material integrity, and strict adherence to
+              architectural standards.
+            </p>
+          </div>
+          <div class="md:pl-8 pt-6 md:pt-0">
+            <span class="text-xs tracking-[0.2em] uppercase text-[#8C7657] font-semibold block mb-2">Interior &amp;
+              Materiality</span>
+            <h3 class="font-serif-editorial text-2xl sm:text-[26px] text-[#1E1E1C] font-medium mb-2">Bespoke Living
+              Environments</h3>
+            <p class="text-[15px] sm:text-base leading-[1.75] text-[#3A3A36]">
+              Harmonizing tactile natural materials, custom millwork, curated lighting schemes, and effortless spatial
+              transitions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         ABOUT SECTION
+    ==================================================================== -->
+    <section id="about" class="py-20 sm:py-28 lg:py-36 bg-[#FFFFFF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div class="lg:col-span-6 lg:pr-4 vmv-reveal">
+            <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+              About VMV Design Groups
+            </p>
+            <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F] mb-7">
+              More Than Structures. We Create Experiences.
+            </h2>
+
+            <div class="space-y-5 text-base sm:text-lg leading-[1.8] text-[#2C2C28]">
+              <p>
+                VMV Design Groups brings together architecture, construction, interior design and
+                planning to create spaces that inspire and perform.
+              </p>
+              <p>
+                We believe successful projects begin with understanding the people who use them. Our
+                approach combines creative thinking, functional planning and attention to detail to
+                develop spaces that reflect individual needs and aspirations.
+              </p>
+            </div>
+
+            <div class="mt-10 pt-8 border-t border-[#E6E1D7] divide-y divide-[#E6E1D7]">
+              <div class="py-5 first:pt-0 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-baseline">
+                <div class="sm:col-span-4 flex items-center gap-3">
+                  <span class="text-xs tracking-[0.2em] text-[#8C7657] font-semibold">01</span>
+                  <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F]">Vision</h3>
+                </div>
+                <p class="sm:col-span-8 text-[15px] sm:text-base leading-[1.7] text-[#3A3A36]">
+                  Understanding ideas and translating them into meaningful concepts.
+                </p>
+              </div>
+              <div class="py-5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-baseline">
+                <div class="sm:col-span-4 flex items-center gap-3">
+                  <span class="text-xs tracking-[0.2em] text-[#8C7657] font-semibold">02</span>
+                  <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F]">Precision</h3>
+                </div>
+                <p class="sm:col-span-8 text-[15px] sm:text-base leading-[1.7] text-[#3A3A36]">
+                  Thoughtful planning and attention to architectural detail.
+                </p>
+              </div>
+              <div class="py-5 last:pb-0 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-baseline">
+                <div class="sm:col-span-4 flex items-center gap-3">
+                  <span class="text-xs tracking-[0.2em] text-[#8C7657] font-semibold">03</span>
+                  <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F]">Execution</h3>
+                </div>
+                <p class="sm:col-span-8 text-[15px] sm:text-base leading-[1.7] text-[#3A3A36]">
+                  A commitment to quality throughout the project journey.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 vmv-reveal">
+            <figure class="relative">
+              <div class="overflow-hidden bg-[#F6F4EF] aspect-[4/3]">
+                <img src="/assets/images/about.jpg"
+                  alt="Illustrative minimalist architectural travertine corridor opening onto a sunlit stone courtyard"
+                  loading="lazy"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]" />
+              </div>
+              <div class="vmv-hairline h-px bg-[#B5A48A]/50 mt-4"></div>
+              <figcaption class="mt-3 text-xs text-[#777777]">
+                Material clarity, proportion and natural light
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. EXPLODED 3D ARCHITECTURAL STRUCTURE SECTION
+    ==================================================================== -->
+    <section id="structure"
+      class="py-20 sm:py-28 lg:py-36 bg-[#22221F] text-[#EDE9E0] vmv-blueprint-grid-dark relative overflow-hidden">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 vmv-reveal">
+          <div class="max-w-2xl">
+            <p class="text-[11px] tracking-[0.26em] uppercase text-[#B5A48A] font-medium mb-4">
+              Interactive 3D Architectural Anatomy
+            </p>
+            <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#FFFFFF] mb-4">
+              Every Architectural Layer, Engineered in Harmony.
+            </h2>
+            <p class="text-sm sm:text-[15px] leading-[1.8] text-[#EDE9E0]/78 font-light">
+              Explore how foundation, structural grid, floor plates, enclosure walls, glazing and
+              roof planes assemble into a cohesive structure. Scroll naturally, adjust the assembly
+              slider, or select any structural layer to inspect it in detail.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button id="exploded-play-btn" type="button"
+              class="inline-flex items-center gap-2 bg-[#EDE9E0] text-[#22221F] hover:bg-[#FFFFFF] px-5 py-3 text-[11px] tracking-[0.16em] uppercase font-medium transition-colors min-h-[44px]">
+              <i data-lucide="play" class="w-3.5 h-3.5"></i>
+              <span>Play Assembly Sequence</span>
+            </button>
+            <button id="exploded-reset-btn" type="button"
+              class="inline-flex items-center gap-2 border border-[#EDE9E0]/35 text-[#EDE9E0] hover:border-[#FFFFFF] hover:text-[#FFFFFF] px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-medium transition-colors min-h-[44px]">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset View</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <!-- 3D Exploded Model Stage -->
+          <div class="lg:col-span-8 flex flex-col">
+            <div
+              class="relative bg-[#1A1A17] border border-[#EDE9E0]/15 aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden">
+              <canvas id="exploded-3d-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"
+                aria-label="Interactive exploded 3D architectural building model showing seven structural layers"></canvas>
+
+              <!-- Static Fallback if WebGL unavailable -->
+              <div id="exploded-fallback"
+                class="hidden absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-[#1A1A17]">
+                <img src="/assets/images/service-construction.jpg"
+                  alt="Illustrative architectural structural layers diagram"
+                  class="max-h-64 object-contain mb-4 opacity-85" />
+                <p class="text-xs tracking-[0.16em] uppercase text-[#B5A48A]">
+                  Interactive 3D view requires WebGL — browse the seven architectural layers beside.
+                </p>
+              </div>
+
+              <!-- Bottom Interactive Slider Bar -->
+              <div
+                class="absolute inset-x-0 bottom-0 bg-[#22221F]/90 border-t border-[#EDE9E0]/15 px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+                <label for="exploded-slider" class="text-[10px] tracking-[0.2em] uppercase text-[#B5A48A] shrink-0">
+                  Layer Separation: <span id="exploded-percent" class="text-[#FFFFFF]">0%</span>
+                </label>
+                <input id="exploded-slider" type="range" min="0" max="100" value="0" class="vmv-slider flex-1"
+                  aria-label="Adjust architectural layer separation" />
+                <span class="text-[10px] tracking-[0.14em] uppercase text-[#EDE9E0]/55 hidden md:inline shrink-0">
+                  Drag canvas to orbit
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Interactive 7-Layer Architectural Selector & Details -->
+          <div class="lg:col-span-4 bg-[#1C1C19] border border-[#EDE9E0]/15 p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="pb-4 mb-4 border-b border-[#EDE9E0]/12">
+                <span class="text-xs tracking-[0.2em] uppercase text-[#B5A48A] font-medium block">
+                  Architectural Components
+                </span>
+              </div>
+
+              <div id="exploded-layer-list" class="space-y-1.5" role="listbox" aria-label="Select architectural layer">
+                <!-- Populated dynamically by JS -->
+              </div>
+            </div>
+
+            <!-- Selected Component Editorial Note -->
+            <div class="mt-6 pt-5 border-t border-[#EDE9E0]/12">
+              <p id="layer-detail-code" class="text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] mb-1">
+                Complete Assembly
+              </p>
+              <h3 id="layer-detail-title" class="font-serif-editorial text-2xl text-[#FFFFFF] mb-2">
+                Integrated Structural System
+              </h3>
+              <p id="layer-detail-desc" class="text-xs sm:text-[13px] leading-[1.75] text-[#EDE9E0]/75 font-light">
+                Every residential and commercial project coordinates foundation engineering,
+                primary structure, enclosure walls, glazing and roof geometry as a single unified
+                system. Select any layer above to isolate and inspect it.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SERVICES SECTION
+    ==================================================================== -->
+    <section id="services" class="py-20 sm:py-28 lg:py-36 bg-[#F6F4EF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="max-w-3xl mb-14 sm:mb-16 vmv-reveal">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+            Our Services
+          </p>
+          <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F]">
+            Comprehensive Design &amp; Construction Solutions.
+          </h2>
+        </div>
+
+        <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          <!-- Populated cleanly via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. ARCHITECTURAL DESIGN TRANSFORMATION SECTION
+    ==================================================================== -->
+    <section id="transformation" class="py-20 sm:py-28 lg:py-36 bg-[#FFFFFF] vmv-blueprint-grid">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 vmv-reveal">
+          <div class="max-w-2xl">
+            <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+              Architectural Design Transformation
+            </p>
+            <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F] mb-4">
+              From Concept Sketch to Finished Architecture.
+            </h2>
+            <p class="text-sm sm:text-[15px] leading-[1.8] text-[#5E5E5A] font-light">
+              Step through how an initial architectural sketch evolves through technical
+              wireframing, structural massing, and photorealistic visualization.
+            </p>
+          </div>
+
+          <button id="transform-autoplay-btn" type="button"
+            class="self-start lg:self-end inline-flex items-center gap-2 border border-[#22221F] text-[#22221F] hover:bg-[#22221F] hover:text-[#FFFFFF] px-5 py-3 text-[11px] tracking-[0.16em] uppercase font-medium transition-colors min-h-[44px]">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span>Step Through Sequence</span>
+          </button>
+        </div>
+
+        <!-- Stage Tabs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8" role="tablist"
+          aria-label="Architectural design transformation stages">
+          <button type="button" role="tab" aria-selected="true" data-transform-stage="0"
+            class="transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#22221F] text-[#FFFFFF] border-[#22221F]">
+            <span class="block text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] mb-1">Stage 01</span>
+            <span class="font-serif-editorial text-xl sm:text-2xl">Concept Sketch</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" data-transform-stage="1"
+            class="transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#FFFFFF] text-[#22221F] border-[#E4DFD5] hover:border-[#22221F]">
+            <span class="block text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] mb-1">Stage 02</span>
+            <span class="font-serif-editorial text-xl sm:text-2xl">Architectural Wireframe</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" data-transform-stage="2"
+            class="transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#FFFFFF] text-[#22221F] border-[#E4DFD5] hover:border-[#22221F]">
+            <span class="block text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] mb-1">Stage 03</span>
+            <span class="font-serif-editorial text-xl sm:text-2xl">3D Structural Model</span>
+          </button>
+          <button type="button" role="tab" aria-selected="false" data-transform-stage="3"
+            class="transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#FFFFFF] text-[#22221F] border-[#E4DFD5] hover:border-[#22221F]">
+            <span class="block text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] mb-1">Stage 04</span>
+            <span class="font-serif-editorial text-xl sm:text-2xl">Finished Visualization</span>
+          </button>
+        </div>
+
+        <!-- Visual Transformation Viewport -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 border border-[#E4DFD5] bg-[#FFFFFF]">
+          <div class="lg:col-span-8 relative aspect-[16/10] bg-[#F6F4EF] overflow-hidden">
+            <!-- Stage 0: Concept Sketch (Crisp Architectural Line Elevation SVG) -->
+            <div data-stage-panel="0"
+              class="transform-stage-panel absolute inset-0 transition-opacity duration-700 opacity-100 flex items-center justify-center bg-[#F6F4EF] p-6 sm:p-10">
+              <svg viewBox="0 0 900 540" class="w-full h-full" role="img"
+                aria-label="Architectural concept elevation sketch showing horizontal rooflines, cantilevered massing and proportion lines">
+                <!-- Subtle drafting sheet border & registration marks -->
+                <rect x="24" y="24" width="852" height="492" fill="none" stroke="#B5A48A" stroke-width="0.8"
+                  stroke-dasharray="4 4" />
+                <!-- Horizon / Datum lines -->
+                <line x1="60" y1="410" x2="840" y2="410" stroke="#22221F" stroke-width="1.2" />
+                <line x1="60" y1="416" x2="840" y2="416" stroke="#B5A48A" stroke-width="0.7" />
+                <!-- Freehand-inspired architectural massing lines -->
+                <path d="M120 410 L120 265 L490 265 L490 410" fill="none" stroke="#22221F" stroke-width="1.8" />
+                <path d="M210 265 L210 145 L750 145 L750 265 L490 265" fill="none" stroke="#22221F" stroke-width="2" />
+                <!-- Overhang roof & fascia lines -->
+                <line x1="175" y1="145" x2="785" y2="145" stroke="#22221F" stroke-width="2.4" />
+                <line x1="185" y1="158" x2="775" y2="158" stroke="#22221F" stroke-width="1" />
+                <!-- Ground floor sandstone piers & glazing bays -->
+                <rect x="150" y="265" width="75" height="145" fill="none" stroke="#22221F" stroke-width="1.2" />
+                <line x1="280" y1="265" x2="280" y2="410" stroke="#777777" stroke-width="1" />
+                <line x1="340" y1="265" x2="340" y2="410" stroke="#777777" stroke-width="1" />
+                <line x1="400" y1="265" x2="400" y2="410" stroke="#777777" stroke-width="1" />
+                <!-- Upper cantilevered glazing -->
+                <rect x="250" y="172" width="440" height="78" fill="none" stroke="#22221F" stroke-width="1.2" />
+                <line x1="360" y1="172" x2="360" y2="250" stroke="#777777" stroke-width="0.9" />
+                <line x1="470" y1="172" x2="470" y2="250" stroke="#777777" stroke-width="0.9" />
+                <line x1="580" y1="172" x2="580" y2="250" stroke="#777777" stroke-width="0.9" />
+                <!-- Cantilever support column & reflecting pool -->
+                <line x1="690" y1="265" x2="690" y2="410" stroke="#22221F" stroke-width="2" />
+                <rect x="490" y="410" width="290" height="14" fill="none" stroke="#B5A48A" stroke-width="1.1" />
+                <!-- Architectural proportion diagonals & elevation callouts -->
+                <line x1="120" y1="410" x2="750" y2="145" stroke="#B5A48A" stroke-width="0.8" stroke-dasharray="6 5" />
+                <line x1="120" y1="110" x2="120" y2="445" stroke="#B5A48A" stroke-width="0.7" stroke-dasharray="3 4" />
+                <line x1="750" y1="110" x2="750" y2="445" stroke="#B5A48A" stroke-width="0.7" stroke-dasharray="3 4" />
+                <!-- Scale & Elevation Labels -->
+                <text x="64" y="64" fill="#777777" font-family="Inter, sans-serif" font-size="11"
+                  letter-spacing="3">CONCEPT ELEVATION — STUDY 01</text>
+                <text x="64" y="476" fill="#9A8B74" font-family="Inter, sans-serif" font-size="10"
+                  letter-spacing="2">PROPORTION · CANTILEVER · SOLAR ORIENTATION</text>
+                <text x="735" y="476" fill="#777777" font-family="Inter, sans-serif" font-size="10" letter-spacing="2">N
+                  ↑</text>
+              </svg>
+            </div>
+
+            <!-- Stage 1: Architectural Wireframe (Technical CAD Orthographic Grid SVG) -->
+            <div data-stage-panel="1"
+              class="transform-stage-panel absolute inset-0 transition-opacity duration-700 opacity-0 pointer-events-none flex items-center justify-center bg-[#1F1F1C] p-6 sm:p-10">
+              <svg viewBox="0 0 900 540" class="w-full h-full" role="img"
+                aria-label="Technical CAD architectural wireframe with structural grid axes and isometric perspective">
+                <!-- Technical Grid Axes -->
+                <g stroke="rgba(181,164,138,0.22)" stroke-width="0.7">
+                  <line x1="140" y1="40" x2="140" y2="500" />
+                  <line x1="300" y1="40" x2="300" y2="500" />
+                  <line x1="460" y1="40" x2="460" y2="500" />
+                  <line x1="620" y1="40" x2="620" y2="500" />
+                  <line x1="760" y1="40" x2="760" y2="500" />
+                  <line x1="60" y1="130" x2="840" y2="130" />
+                  <line x1="60" y1="265" x2="840" y2="265" />
+                  <line x1="60" y1="410" x2="840" y2="410" />
+                </g>
+                <!-- Axis Circles -->
+                <g fill="none" stroke="#B5A48A" stroke-width="1">
+                  <circle cx="140" cy="40" r="11" />
+                  <circle cx="300" cy="40" r="11" />
+                  <circle cx="460" cy="40" r="11" />
+                  <circle cx="620" cy="40" r="11" />
+                  <circle cx="760" cy="40" r="11" />
+                </g>
+                <g fill="#B5A48A" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">
+                  <text x="140" y="44">A</text><text x="300" y="44">B</text>
+                  <text x="460" y="44">C</text><text x="620" y="44">D</text>
+                  <text x="760" y="44">E</text>
+                </g>
+                <!-- Isometric Architectural Wireframe -->
+                <g fill="none" stroke="#EDE9E0" stroke-width="1.3">
+                  <!-- Lower plinth wireframe -->
+                  <polygon points="155,390 470,455 775,360 460,300" stroke="#B5A48A" />
+                  <!-- Ground floor structural box -->
+                  <polygon points="195,375 460,430 460,305 195,255" />
+                  <polygon points="460,430 670,365 670,245 460,305" />
+                  <!-- Cantilevered upper floor wireframe -->
+                  <polygon points="230,240 535,305 765,230 460,170" />
+                  <polygon points="230,240 230,155 535,215 535,305" />
+                  <polygon points="535,215 765,145 765,230 535,305" />
+                  <polygon points="230,155 460,92 765,145 535,215" stroke="#B5A48A" stroke-width="1.5" />
+                </g>
+                <!-- Hidden structural lines -->
+                <g fill="none" stroke="rgba(237,233,224,0.32)" stroke-width="0.9" stroke-dasharray="4 4">
+                  <line x1="460" y1="92" x2="460" y2="305" />
+                  <line x1="300" y1="168" x2="300" y2="395" />
+                  <line x1="620" y1="175" x2="620" y2="380" />
+                </g>
+                <text x="64" y="492" fill="#EDE9E0" font-family="Inter, sans-serif" font-size="10"
+                  letter-spacing="2.5">CAD WIREFRAME · STRUCTURAL GRID &amp; ENVELOPE GEOMETRY</text>
+              </svg>
+            </div>
+
+            <!-- Stage 2: 3D Structural Clay Model (Live Three.js Monochrome Massing) -->
+            <div data-stage-panel="2"
+              class="transform-stage-panel absolute inset-0 transition-opacity duration-700 opacity-0 pointer-events-none bg-[#EAE5DC]">
+              <canvas id="transform-3d-canvas" class="w-full h-full block"></canvas>
+              <div
+                class="pointer-events-none absolute bottom-4 left-4 bg-[#22221F]/80 text-[#EDE9E0] px-3 py-1.5 text-[10px] tracking-[0.18em] uppercase">
+                Live 3D Structural Massing &amp; Solar Shadow Study
+              </div>
+            </div>
+
+            <!-- Stage 3: Finished Architectural Visualization -->
+            <div data-stage-panel="3"
+              class="transform-stage-panel absolute inset-0 transition-opacity duration-700 opacity-0 pointer-events-none bg-[#22221F]">
+              <img src="/assets/images/hero.jpg"
+                alt="Finished architectural visualization showing warm sandstone, charcoal concrete, glass and twilight lighting"
+                loading="lazy" class="w-full h-full object-cover" />
+
+            </div>
+          </div>
+
+          <!-- Stage Commentary Panel -->
+          <div
+            class="lg:col-span-4 p-7 sm:p-9 flex flex-col justify-between bg-[#FFFFFF] border-t lg:border-t-0 lg:border-l border-[#E4DFD5]">
+            <div>
+              <p id="transform-stage-eyebrow"
+                class="text-[11px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium mb-3">
+                Stage 01 / 04
+              </p>
+              <h3 id="transform-stage-title" class="font-serif-editorial text-3xl text-[#22221F] mb-4">
+                Concept Sketch
+              </h3>
+              <p id="transform-stage-desc" class="text-[15px] leading-[1.8] text-[#555551] font-light mb-6">
+                Every project begins with hand-drawn proportion studies, site orientation diagrams,
+                and spatial relationships that translate client aspirations into a clear architectural
+                parti.
+              </p>
+
+              <div class="pt-5 border-t border-[#ECE7DE]">
+                <p class="text-[10px] tracking-[0.2em] uppercase text-[#9A8B74] mb-3">
+                  Stage Focus
+                </p>
+                <ul id="transform-stage-bullets" class="space-y-2 text-sm text-[#4A4A46]"></ul>
+              </div>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-[#ECE7DE] flex items-center justify-between gap-3">
+              <button id="transform-prev-btn" type="button"
+                class="inline-flex items-center gap-1.5 border border-[#DFDAD0] hover:border-[#22221F] px-4 py-2.5 text-xs tracking-[0.14em] uppercase text-[#22221F] min-h-[40px]">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Prev</span>
+              </button>
+              <button id="transform-next-btn" type="button"
+                class="inline-flex items-center gap-1.5 bg-[#22221F] text-[#FFFFFF] hover:bg-[#3A3A35] px-4 py-2.5 text-xs tracking-[0.14em] uppercase min-h-[40px]">
+                <span>Next Stage</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. INTERACTIVE PROJECT PORTFOLIO SHOWCASE
+    ==================================================================== -->
+    <section id="projects" class="py-20 sm:py-28 lg:py-36 bg-[#F6F4EF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 sm:mb-12">
+          <div class="max-w-2xl vmv-reveal">
+            <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+              Portfolio &amp; Architectural Direction
+            </p>
+            <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F]">
+              Ideas Turned Into Spaces.
+            </h2>
+          </div>
+
+          <div id="portfolio-filters" role="tablist" aria-label="Filter projects by category"
+            class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Honest Reference Imagery Disclaimer -->
+        <div
+          class="mb-10 bg-[#FFFFFF] border-l-2 border-[#B5A48A] px-5 py-4 flex items-start gap-3.5 border border-[#E7E2D8]">
+          <i data-lucide="info" class="w-4 h-4 text-[#9A8B74] shrink-0 mt-0.5"></i>
+          <p class="text-xs sm:text-[13px] leading-[1.7] text-[#5A5A56]">
+            <strong class="font-medium text-[#22221F]">
+              Illustrative Reference Imagery &amp; Demonstration Models:
+            </strong>
+            The studies below illustrate VMV Design Groups&apos; architectural and interior design
+            direction rather than completed VMV projects. Select any study to open its full detail
+            presentation, additional views, and interactive 3D demonstration model.
+          </p>
+        </div>
+
+        <!-- Asymmetric Editorial Grid -->
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         WHY CHOOSE US
+    ==================================================================== -->
+    <section id="approach" class="py-20 sm:py-28 lg:py-32 bg-[#FFFFFF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="max-w-3xl mb-14 sm:mb-16 vmv-reveal">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+            Why Choose Us
+          </p>
+          <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F]">
+            Built Around Your Vision. Driven by Our Approach.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div
+            class="vmv-reveal bg-[#F6F4EF] border border-[#E7E2D8] p-7 sm:p-8 flex flex-col hover:border-[#B5A48A] transition-colors">
+            <div
+              class="w-11 h-11 border border-[#E5DFD3] bg-[#FFFFFF] flex items-center justify-center text-[#22221F] mb-7">
+              <i data-lucide="layers" class="w-5 h-5 stroke-[1.5]"></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F] mb-3">Integrated Expertise</h3>
+            <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">
+              Architecture, construction coordination, interior design and planning aligned under one cohesive studio
+              perspective.
+            </p>
+          </div>
+          <div
+            class="vmv-reveal bg-[#F6F4EF] border border-[#E7E2D8] p-7 sm:p-8 flex flex-col hover:border-[#B5A48A] transition-colors">
+            <div
+              class="w-11 h-11 border border-[#E5DFD3] bg-[#FFFFFF] flex items-center justify-center text-[#22221F] mb-7">
+              <i data-lucide="compass" class="w-5 h-5 stroke-[1.5]"></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F] mb-3">Thoughtful Design</h3>
+            <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">
+              Spaces shaped by proportion, natural light, functional flow and enduring material restraint rather than
+              fleeting trends.
+            </p>
+          </div>
+          <div
+            class="vmv-reveal bg-[#F6F4EF] border border-[#E7E2D8] p-7 sm:p-8 flex flex-col hover:border-[#B5A48A] transition-colors">
+            <div
+              class="w-11 h-11 border border-[#E5DFD3] bg-[#FFFFFF] flex items-center justify-center text-[#22221F] mb-7">
+              <i data-lucide="users" class="w-5 h-5 stroke-[1.5]"></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F] mb-3">Client-Centred Approach</h3>
+            <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">
+              Every decision begins with listening carefully to how you live, work and envision your space evolving.
+            </p>
+          </div>
+          <div
+            class="vmv-reveal bg-[#F6F4EF] border border-[#E7E2D8] p-7 sm:p-8 flex flex-col hover:border-[#B5A48A] transition-colors">
+            <div
+              class="w-11 h-11 border border-[#E5DFD3] bg-[#FFFFFF] flex items-center justify-center text-[#22221F] mb-7">
+              <i data-lucide="ruler" class="w-5 h-5 stroke-[1.5]"></i>
+            </div>
+            <h3 class="font-serif-editorial text-2xl font-medium text-[#22221F] mb-3">Attention to Detail</h3>
+            <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">
+              Careful consideration across layouts, junctions, finishes and coordination from initial brief through
+              completion.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         OUR PROCESS (HORIZONTAL DESKTOP / VERTICAL MOBILE TIMELINE)
+    ==================================================================== -->
+    <section id="process" class="py-20 sm:py-28 lg:py-36 bg-[#F6F4EF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="max-w-2xl mb-14 sm:mb-20 vmv-reveal">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">
+            Our Process
+          </p>
+          <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F]">
+            From Vision to Reality.
+          </h2>
+        </div>
+
+        <div class="relative">
+          <div class="hidden lg:block absolute top-[23px] left-0 right-0 h-px bg-[#DFDAD0]" aria-hidden="true"></div>
+          <div class="lg:hidden absolute top-4 bottom-4 left-[19px] w-px bg-[#DFDAD0]" aria-hidden="true"></div>
+
+          <ol class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-7">
+            <li class="relative vmv-reveal">
+              <div class="flex lg:flex-col items-start gap-5 lg:gap-0">
+                <div
+                  class="relative z-10 w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-[#FFFFFF] border border-[#22221F] flex items-center justify-center text-xs tracking-[0.18em] font-medium text-[#22221F] lg:mb-7">
+                  01</div>
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] font-medium text-[#22221F] mb-2.5">Discover
+                  </h3>
+                  <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">Understand the
+                    client&apos;s vision, requirements and project goals.</p>
+                </div>
+              </div>
+            </li>
+            <li class="relative vmv-reveal">
+              <div class="flex lg:flex-col items-start gap-5 lg:gap-0">
+                <div
+                  class="relative z-10 w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-[#FFFFFF] border border-[#22221F] flex items-center justify-center text-xs tracking-[0.18em] font-medium text-[#22221F] lg:mb-7">
+                  02</div>
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] font-medium text-[#22221F] mb-2.5">Plan</h3>
+                  <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">Develop project direction,
+                    layouts and planning approach.</p>
+                </div>
+              </div>
+            </li>
+            <li class="relative vmv-reveal">
+              <div class="flex lg:flex-col items-start gap-5 lg:gap-0">
+                <div
+                  class="relative z-10 w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-[#FFFFFF] border border-[#22221F] flex items-center justify-center text-xs tracking-[0.18em] font-medium text-[#22221F] lg:mb-7">
+                  03</div>
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] font-medium text-[#22221F] mb-2.5">Design</h3>
+                  <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">Translate ideas into
+                    considered architectural and interior solutions.</p>
+                </div>
+              </div>
+            </li>
+            <li class="relative vmv-reveal">
+              <div class="flex lg:flex-col items-start gap-5 lg:gap-0">
+                <div
+                  class="relative z-10 w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-[#FFFFFF] border border-[#22221F] flex items-center justify-center text-xs tracking-[0.18em] font-medium text-[#22221F] lg:mb-7">
+                  04</div>
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] font-medium text-[#22221F] mb-2.5">Execute
+                  </h3>
+                  <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">Coordinate project
+                    execution in line with agreed requirements.</p>
+                </div>
+              </div>
+            </li>
+            <li class="relative vmv-reveal">
+              <div class="flex lg:flex-col items-start gap-5 lg:gap-0">
+                <div
+                  class="relative z-10 w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-[#FFFFFF] border border-[#22221F] flex items-center justify-center text-xs tracking-[0.18em] font-medium text-[#22221F] lg:mb-7">
+                  05</div>
+                <div>
+                  <h3 class="font-serif-editorial text-2xl sm:text-[26px] font-medium text-[#22221F] mb-2.5">Deliver
+                  </h3>
+                  <p class="text-sm sm:text-[15px] leading-[1.75] text-[#666662] font-light">Complete the project with
+                    attention to quality and detail.</p>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PROJECT TYPES (RESIDENTIAL & COMMERCIAL SPACES)
+    ==================================================================== -->
+    <section id="spaces" aria-label="Project types" class="bg-[#22221F]">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+        <div class="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] overflow-hidden group flex items-end">
+          <img src="/assets/images/portfolio-residential-1.jpg"
+            alt="Illustrative residential courtyard architecture in warm sandstone and timber" loading="lazy"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#22221F]/90 via-[#22221F]/45 to-[#22221F]/25"
+            aria-hidden="true"></div>
+          <div class="relative z-10 p-6 sm:p-12 lg:p-16 max-w-xl">
+            <h2
+              class="font-serif-editorial text-3xl sm:text-4xl lg:text-[42px] leading-[1.12] font-normal text-[#FFFFFF] mb-3">
+              Residential Spaces
+            </h2>
+            <p class="text-[15px] sm:text-lg leading-[1.7] text-[#EDE9E0]/90 font-light mb-6">
+              Homes designed around comfort, lifestyle and individuality.
+            </p>
+            <button type="button" data-enquire-type="Residential"
+              class="inline-flex items-center gap-2.5 text-xs tracking-[0.16em] uppercase text-[#EDE9E0] border-b border-[#B5A48A] pb-1.5 hover:text-[#FFFFFF] hover:border-[#FFFFFF] transition-colors min-h-[40px]">
+              <span>Discuss a Residential Project</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] overflow-hidden group flex items-end border-t lg:border-t-0 lg:border-l border-[#EDE9E0]/15">
+          <img src="/assets/images/portfolio-commercial-1.jpg"
+            alt="Illustrative commercial office pavilion with charcoal architectural louvers and stone base"
+            loading="lazy"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#22221F]/90 via-[#22221F]/45 to-[#22221F]/25"
+            aria-hidden="true"></div>
+          <div class="relative z-10 p-6 sm:p-12 lg:p-16 max-w-xl">
+            <h2
+              class="font-serif-editorial text-3xl sm:text-4xl lg:text-[42px] leading-[1.12] font-normal text-[#FFFFFF] mb-3">
+              Commercial Spaces
+            </h2>
+            <p class="text-[15px] sm:text-lg leading-[1.7] text-[#EDE9E0]/90 font-light mb-6">
+              Purpose-driven environments designed for businesses and professional needs.
+            </p>
+            <button type="button" data-enquire-type="Commercial"
+              class="inline-flex items-center gap-2.5 text-xs tracking-[0.16em] uppercase text-[#EDE9E0] border-b border-[#B5A48A] pb-1.5 hover:text-[#FFFFFF] hover:border-[#FFFFFF] transition-colors min-h-[40px]">
+              <span>Discuss a Commercial Project</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CLIENT PERSPECTIVES (RESIDENTIAL & COMMERCIAL)
+    ==================================================================== -->
+    <section class="py-20 sm:py-24 bg-[#FFFFFF] border-t border-[#E8E3D8]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="max-w-2xl mb-12 vmv-reveal">
+          <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-3">
+            Client Perspectives
+          </p>
+          <h2 class="font-serif-editorial text-2xl sm:text-3xl lg:text-4xl font-normal text-[#22221F]">
+            Thoughtful Partnerships. Enduring Outcomes.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 vmv-reveal">
+          <!-- Reflection 1: Residential -->
+          <div class="p-8 sm:p-10 bg-[#FAF8F5] border border-[#E8E3D8] flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium block mb-4">
+                Private Residence · Bengaluru
+              </span>
+              <blockquote class="font-serif-editorial text-xl sm:text-2xl text-[#22221F] leading-[1.4] mb-6">
+                &ldquo;VMV brought spatial clarity and natural ventilation into every corner of the house, maintaining
+                disciplined material honesty from initial drawings to the final day of handover.&rdquo;
+              </blockquote>
+            </div>
+            <div class="pt-6 border-t border-[#E8E3D8] flex items-center justify-between text-xs text-[#666662]">
+              <span class="font-medium text-[#22221F]">Villa Commission</span>
+              <span>Full Architectural &amp; Turnkey Scope</span>
+            </div>
+          </div>
+
+          <!-- Reflection 2: Commercial -->
+          <div class="p-8 sm:p-10 bg-[#FAF8F5] border border-[#E8E3D8] flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium block mb-4">
+                Commercial Office &amp; Studio Space
+              </span>
+              <blockquote class="font-serif-editorial text-xl sm:text-2xl text-[#22221F] leading-[1.4] mb-6">
+                &ldquo;An architectural team that marries contemporary design language with rigorous site execution and
+                structural coordination throughout the entire build.&rdquo;
+              </blockquote>
+            </div>
+            <div class="pt-6 border-t border-[#E8E3D8] flex items-center justify-between text-xs text-[#666662]">
+              <span class="font-medium text-[#22221F]">Commercial Partner</span>
+              <span>Planning &amp; Construction Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         FINAL CALL TO ACTION
+    ==================================================================== -->
+    <section class="py-20 sm:py-28 lg:py-32 bg-[#22221F] text-[#FFFFFF] border-t border-[#EDE9E0]/10">
+      <div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-10 text-center vmv-reveal">
+        <p class="text-[11px] tracking-[0.26em] uppercase text-[#B5A48A] mb-5">Start a Conversation</p>
+        <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#FFFFFF] mb-6">
+          Have a Vision? Let&apos;s Build It Together.
+        </h2>
+        <p class="text-[15px] sm:text-lg leading-[1.8] text-[#EDE9E0]/80 font-light max-w-2xl mx-auto mb-10">
+          Whether you&apos;re planning a new home, a commercial space or an interior transformation,
+          let&apos;s start a conversation.
+        </p>
+        <button type="button" data-scroll-to="contact" data-focus-contact="true"
+          class="vmv-magnetic inline-flex items-center justify-center gap-2.5 bg-[#EDE9E0] text-[#22221F] hover:bg-[#FFFFFF] px-8 py-4 text-xs tracking-[0.18em] uppercase font-medium transition-colors min-h-[48px]">
+          <span>Start a Project Enquiry</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CONTACT SECTION
+    ==================================================================== -->
+    <section id="contact" class="py-20 sm:py-28 lg:py-36 bg-[#F6F4EF]">
+      <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div class="lg:col-span-5 vmv-reveal">
+            <p class="text-[11px] tracking-[0.24em] uppercase text-[#B5A48A] font-medium mb-4">Contact Us</p>
+            <h2 class="font-serif-editorial vmv-section-heading font-normal text-[#22221F] mb-6">
+              Let&apos;s Talk About Your Project.
+            </h2>
+            <p class="text-[15px] leading-[1.8] text-[#5E5E5A] font-light mb-10">
+              Share an outline of your residential, commercial or interior requirements using the
+              enquiry form. Our studio reviews every brief carefully before scheduling an initial
+              consultation.
+            </p>
+
+            <div class="space-y-6 pt-8 border-t border-[#E4DFD5]">
+              <div class="flex items-start gap-4">
+                <i data-lucide="phone" class="w-4 h-4 text-[#B5A48A] mt-1 shrink-0"></i>
+                <div>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#777777] mb-1">Phone</p>
+                  <p class="text-sm text-[#666662] italic">Verified company phone number to be added</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <i data-lucide="mail" class="w-4 h-4 text-[#B5A48A] mt-1 shrink-0"></i>
+                <div>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#777777] mb-1">Email</p>
+                  <p class="text-sm text-[#666662] italic">Verified studio email address to be added</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <i data-lucide="map-pin" class="w-4 h-4 text-[#B5A48A] mt-1 shrink-0"></i>
+                <div>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#777777] mb-1">Studio Address</p>
+                  <p class="text-sm text-[#666662] italic">Verified office address &amp; city to be added</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 vmv-reveal">
+            <div class="bg-[#FFFFFF] border border-[#E6E1D7] p-6 sm:p-10 lg:p-12">
+              <!-- Success Panel -->
+              <div id="contact-success-panel" class="hidden py-6" role="status" aria-live="polite">
+                <div
+                  class="inline-flex items-center justify-center w-12 h-12 bg-[#F6F4EF] border border-[#B5A48A] text-[#22221F] mb-6">
+                  <i data-lucide="check-circle-2" class="w-6 h-6 text-[#8E7C61]"></i>
+                </div>
+                <h3 class="font-serif-editorial text-3xl text-[#22221F] mb-3">Enquiry Received</h3>
+                <p id="contact-success-msg" class="text-[15px] leading-[1.75] text-[#555551] mb-6"></p>
+                <div id="contact-success-summary"
+                  class="bg-[#F6F4EF] border border-[#E7E2D8] p-5 mb-8 text-sm text-[#4A4A46] space-y-1.5"></div>
+                <button id="contact-reset-btn" type="button"
+                  class="inline-flex items-center gap-2 border border-[#22221F] text-[#22221F] hover:bg-[#22221F] hover:text-[#FFFFFF] px-6 py-3 text-xs tracking-[0.15em] uppercase font-medium transition-colors min-h-[44px]">
+                  Submit Another Enquiry
+                </button>
+              </div>
+
+              <!-- Enquiry Form -->
+              <form id="contact-form" novalidate class="space-y-6">
+                <!-- Honeypot spam trap -->
+                <div class="hidden" aria-hidden="true">
+                  <label for="vmv-website">Website</label>
+                  <input id="vmv-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div id="contact-error-banner" role="alert"
+                  class="hidden bg-[#FDF4F3] border border-[#D9A7A0] px-4 py-3.5 flex items-start gap-3 text-sm text-[#7A271A]">
+                  <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                  <span id="contact-error-text"></span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label for="fullName"
+                      class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                      Full Name <span class="text-[#9A4B3E]">*</span>
+                    </label>
+                    <input id="fullName" name="fullName" type="text" required autocomplete="name"
+                      placeholder="Your full name"
+                      class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] placeholder:text-[#9A9892] focus:outline-none focus:border-[#22221F] transition-colors min-h-[46px]" />
+                    <p id="err-fullName" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                  </div>
+
+                  <div>
+                    <label for="email"
+                      class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                      Email Address <span class="text-[#9A4B3E]">*</span>
+                    </label>
+                    <input id="email" name="email" type="email" required autocomplete="email"
+                      placeholder="name@example.com"
+                      class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] placeholder:text-[#9A9892] focus:outline-none focus:border-[#22221F] transition-colors min-h-[46px]" />
+                    <p id="err-email" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label for="phone"
+                      class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                      Phone Number
+                    </label>
+                    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional contact number"
+                      class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] placeholder:text-[#9A9892] focus:outline-none focus:border-[#22221F] transition-colors min-h-[46px]" />
+                    <p id="err-phone" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                  </div>
+
+                  <div>
+                    <label for="projectType"
+                      class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                      Project Type <span class="text-[#9A4B3E]">*</span>
+                    </label>
+                    <select id="projectType" name="projectType" required
+                      class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] focus:outline-none focus:border-[#22221F] transition-colors min-h-[46px]">
+                      <option value="">Select project type</option>
+                      <option value="Residential">Residential</option>
+                      <option value="Commercial">Commercial</option>
+                      <option value="Interior">Interior</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <p id="err-projectType" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="projectLocation"
+                    class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                    Project Location <span class="text-[#9A4B3E]">*</span>
+                  </label>
+                  <input id="projectLocation" name="projectLocation" type="text" required
+                    placeholder="City, neighbourhood or site location"
+                    class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] placeholder:text-[#9A9892] focus:outline-none focus:border-[#22221F] transition-colors min-h-[46px]" />
+                  <p id="err-projectLocation" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                </div>
+
+                <div>
+                  <label for="projectDescription"
+                    class="block text-[11px] tracking-[0.16em] uppercase text-[#555551] font-medium mb-2">
+                    Project Description <span class="text-[#9A4B3E]">*</span>
+                  </label>
+                  <textarea id="projectDescription" name="projectDescription" rows="4" required
+                    placeholder="Tell us about your vision, scope, approximate timeline or any specific goals..."
+                    class="w-full bg-[#FFFFFF] border border-[#DFDAD0] px-4 py-3 text-sm text-[#252525] placeholder:text-[#9A9892] focus:outline-none focus:border-[#22221F] transition-colors resize-y"></textarea>
+                  <p id="err-projectDescription" class="hidden mt-1.5 text-xs text-[#A33B2E]"></p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                  <p class="inline-flex items-center gap-2 text-xs text-[#777777]">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-[#B5A48A] shrink-0"></i>
+                    <span>Protected against automated spam.</span>
+                  </p>
+                  <button id="contact-submit-btn" type="submit"
+                    class="vmv-magnetic inline-flex items-center justify-center gap-2.5 bg-[#22221F] text-[#FFFFFF] hover:bg-[#383833] disabled:opacity-60 px-8 py-4 text-xs tracking-[0.16em] uppercase font-medium transition-colors min-h-[48px]">
+                    <span id="contact-submit-label">Send Enquiry</span>
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       FOOTER
+  ====================================================================== -->
+  <footer class="bg-[#22221F] text-[#EDE9E0] pt-16 sm:pt-20 pb-10 border-t border-[#EDE9E0]/10">
+    <div class="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-[#EDE9E0]/12">
+        <div class="lg:col-span-4 space-y-5">
+          <div class="inline-block">
+            <img src="/assets/logo/vmv-logo-transparent.png?v=2" alt="VMV Design Groups"
+              class="h-16 sm:h-20 lg:h-24 w-auto object-contain block" />
+          </div>
+          <p class="text-[15px] sm:text-base leading-[1.8] text-[#EDE9E0]/90 max-w-sm">
+            A contemporary architecture, construction, interior design and planning practice
+            dedicated to thoughtful, enduring residential and commercial spaces.
+          </p>
+          <p class="text-xs tracking-[0.2em] uppercase text-[#B5A48A] font-medium">
+            Designing Spaces. Building Futures.
+          </p>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h3 class="text-[11px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium mb-4">Navigation</h3>
+          <ul class="space-y-2.5 text-sm text-[#EDE9E0]/75">
+            <li><button type="button" data-scroll-to="home" class="hover:text-[#FFFFFF] transition-colors">Home</button>
+            </li>
+            <li><button type="button" data-scroll-to="about"
+                class="hover:text-[#FFFFFF] transition-colors">About</button></li>
+            <li><button type="button" data-scroll-to="services"
+                class="hover:text-[#FFFFFF] transition-colors">Services</button></li>
+            <li><button type="button" data-scroll-to="projects"
+                class="hover:text-[#FFFFFF] transition-colors">Projects</button></li>
+            <li><button type="button" data-scroll-to="process" class="hover:text-[#FFFFFF] transition-colors">Our
+                Process</button></li>
+            <li><button type="button" data-scroll-to="contact"
+                class="hover:text-[#FFFFFF] transition-colors">Contact</button></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h3 class="text-[11px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium mb-4">Services</h3>
+          <ul class="space-y-2.5 text-sm text-[#EDE9E0]/75">
+            <li><button type="button" data-scroll-to="services"
+                class="hover:text-[#FFFFFF] transition-colors text-left">Architecture &amp; Building Design</button>
+            </li>
+            <li><button type="button" data-scroll-to="services"
+                class="hover:text-[#FFFFFF] transition-colors text-left">Construction &amp; Contracting</button></li>
+            <li><button type="button" data-scroll-to="services"
+                class="hover:text-[#FFFFFF] transition-colors text-left">Interior Design</button></li>
+            <li><button type="button" data-scroll-to="services"
+                class="hover:text-[#FFFFFF] transition-colors text-left">Planning &amp; Consultation</button></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3 space-y-6">
+          <div>
+            <h3 class="text-[11px] tracking-[0.22em] uppercase text-[#B5A48A] font-medium mb-4">Contact</h3>
+            <ul class="space-y-2 text-sm text-[#EDE9E0]/70 font-light">
+              <li>Phone: Pending verification</li>
+              <li>Email: Pending verification</li>
+              <li>Office: Configurable location</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#EDE9E0]/60">
+        <p>&copy; <span id="footer-year">2026</span> VMV Design Groups. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+          <button id="open-privacy-btn" type="button"
+            class="hover:text-[#FFFFFF] transition-colors underline underline-offset-4 decoration-[#EDE9E0]/30">
+            Privacy Policy
+          </button>
+          <span class="text-[#EDE9E0]/35" aria-hidden="true">|</span>
+          <span class="tracking-[0.12em] uppercase text-[10px] text-[#B5A48A]">
+            Architecture · Design · Planning · Construction
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back-to-top Control -->
+  <button id="back-to-top-btn" type="button" aria-label="Back to top" data-scroll-to="home"
+    class="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-40 w-11 h-11 bg-[#22221F] text-[#EDE9E0] border border-[#B5A48A]/50 hover:bg-[#383833] inline-flex items-center justify-center transition-all duration-300 opacity-0 translate-y-3 pointer-events-none">
+    <i data-lucide="arrow-up" class="w-4 h-4"></i>
+  </button>
+
+  <!-- ======================================================================
+       IMMERSIVE PROJECT DETAIL & 3D DEMO MODAL
+  ====================================================================== -->
+  <div id="portfolio-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#22221F]/85">
+    <div class="bg-[#FFFFFF] max-w-5xl w-full max-h-[92vh] overflow-y-auto border border-[#E5E0D6]">
+      <!-- Top Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-b border-[#ECE7DE] bg-[#F6F4EF]">
+        <div class="flex items-center gap-3">
+          <span id="pm-category" class="text-[11px] tracking-[0.2em] uppercase text-[#B5A48A] font-medium"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="pm-mode-photos" type="button"
+            class="px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase bg-[#22221F] text-[#FFFFFF] min-h-[36px]">
+            Photographs
+          </button>
+          <button id="pm-mode-3d" type="button"
+            class="px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase border border-[#DFDAD0] bg-[#FFFFFF] text-[#22221F] hover:border-[#22221F] min-h-[36px]">
+            3D Demo Model
+          </button>
+          <button id="pm-close-btn" type="button" aria-label="Close project detail"
+            class="ml-2 w-9 h-9 bg-[#22221F] text-[#FFFFFF] hover:bg-[#3A3A35] inline-flex items-center justify-center">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Media Stage: Photos or Interactive 3D Demo Model -->
+      <div class="relative aspect-[16/9] bg-[#1C1C19] overflow-hidden">
+        <img id="pm-main-img" src="" alt="" class="w-full h-full object-cover" />
+        <div id="pm-3d-stage" class="hidden absolute inset-0 w-full h-full">
+          <canvas id="pm-3d-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+          <div
+            class="pointer-events-none absolute bottom-3 left-3 bg-[#22221F]/85 text-[#EDE9E0] border border-[#EDE9E0]/15 px-3 py-1 text-[10px] tracking-[0.16em] uppercase">
+            Illustrative 3D Demonstration Model · Drag to Orbit
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnail Strip (Photos mode) -->
+      <div id="pm-thumbs" class="flex gap-2.5 px-6 pt-4 bg-[#FFFFFF] overflow-x-auto"></div>
+
+      <!-- Editorial Details -->
+      <div class="p-6 sm:p-8 space-y-6">
+        <div>
+          <h3 id="pm-title" class="font-serif-editorial text-3xl sm:text-4xl text-[#22221F] mb-3"></h3>
+          <p id="pm-description" class="text-[15px] leading-[1.8] text-[#555551] font-light"></p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-5 border-t border-[#ECE7DE]">
+          <div>
+            <h4 class="text-[11px] tracking-[0.2em] uppercase text-[#B5A48A] font-medium mb-2">
+              Architectural Concept
+            </h4>
+            <p id="pm-concept" class="text-sm leading-[1.75] text-[#4A4A46]"></p>
+          </div>
+          <div>
+            <h4 class="text-[11px] tracking-[0.2em] uppercase text-[#B5A48A] font-medium mb-2">
+              Design Approach
+            </h4>
+            <p id="pm-approach" class="text-sm leading-[1.75] text-[#4A4A46]"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#F6F4EF] border border-[#E7E2D8] p-4 sm:p-5 text-xs">
+          <div>
+            <span class="block text-[10px] tracking-[0.18em] uppercase text-[#8C8880] mb-1">Typology</span>
+            <span id="pm-detail-typology" class="text-[#22221F] font-medium"></span>
+          </div>
+          <div>
+            <span class="block text-[10px] tracking-[0.18em] uppercase text-[#8C8880] mb-1">Material Palette</span>
+            <span id="pm-detail-materials" class="text-[#22221F] font-medium"></span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-[#ECE7DE] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p class="text-xs text-[#777777]">
+            Demonstration reference study — ready to be replaced with verified VMV Design Groups photography and 3D
+            models.
+          </p>
+          <button id="pm-enquire-btn" type="button"
+            class="inline-flex items-center justify-center gap-2 bg-[#22221F] text-[#FFFFFF] hover:bg-[#383833] px-6 py-3 text-xs tracking-[0.15em] uppercase font-medium min-h-[44px] shrink-0">
+            <span>Discuss a Similar Project</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       PRIVACY POLICY MODAL
+  ====================================================================== -->
+  <div id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#22221F]/80">
+    <div class="bg-[#FFFFFF] max-w-2xl w-full max-h-[85vh] overflow-y-auto border border-[#E5E0D6] p-6 sm:p-10">
+      <div class="flex items-start justify-between gap-4 pb-5 border-b border-[#ECE7DE] mb-6">
+        <div class="inline-flex items-center gap-3.5">
+          <div class="bg-[#22221F] p-1 shrink-0 rounded-sm">
+            <img src="/assets/logo/vmv-logo-transparent.png?v=2" alt="VMV Design Groups"
+              class="h-10 w-auto object-contain block" />
+          </div>
+          <div>
+            <p class="text-[11px] tracking-[0.22em] uppercase text-[#B5A48A] mb-0.5">VMV Design Groups</p>
+            <h3 id="privacy-modal-title" class="font-serif-editorial text-2xl sm:text-3xl text-[#22221F] leading-tight">
+              Privacy Policy
+            </h3>
+          </div>
+        </div>
+        <button id="close-privacy-x" type="button" aria-label="Close privacy policy"
+          class="w-10 h-10 border border-[#E2DDD3] text-[#22221F] hover:bg-[#F6F4EF] inline-flex items-center justify-center shrink-0">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-sm leading-[1.8] text-[#555551]">
+        <p>
+          VMV Design Groups respects your privacy and handles project enquiry details solely for the
+          purpose of responding to your consultation request and discussing potential architecture,
+          construction, interior design or planning services.
+        </p>
+        <p>
+          <strong class="font-medium text-[#22221F]">Information Collected:</strong> When you submit
+          our enquiry form, we collect the contact and project details you choose to provide (such as
+          your name, email address, phone number, project type, location and brief).
+        </p>
+        <p>
+          <strong class="font-medium text-[#22221F]">How We Use Information:</strong> Your details
+          are used strictly to communicate with you regarding your enquiry. We do not sell or rent
+          personal information to third parties.
+        </p>
+        <p>
+          <strong class="font-medium text-[#22221F]">Updates &amp; Contact:</strong> This privacy
+          notice can be expanded with company-specific legal registration details and contact
+          channels once verified company information is configured.
+        </p>
+      </div>
+
+      <div class="mt-8 pt-5 border-t border-[#ECE7DE] flex justify-end">
+        <button id="close-privacy-btn" type="button"
+          class="bg-[#22221F] text-[#FFFFFF] hover:bg-[#383833] px-6 py-2.5 text-xs tracking-[0.16em] uppercase font-medium min-h-[42px]">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       APPLICATION LOGIC & THREE.JS 3D ARCHITECTURAL ENGINES
+  ====================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ----------------------------------------------------------------------
+      // CONFIG & DATA
+      // ----------------------------------------------------------------------
+      const SITE_CONFIG = {
+        formEndpoint: '/api/contact', // Wired to Vercel Serverless Function in api/contact.js
+      };
+
+      const IMAGES = {
+        hero: '/assets/images/hero.jpg',
+        about: '/assets/images/about.jpg',
+        serviceArchitecture: '/assets/images/service-architecture.jpg',
+        serviceConstruction: '/assets/images/service-construction.jpg',
+        serviceInterior: '/assets/images/service-interior.jpg',
+        servicePlanning: '/assets/images/service-planning.jpg',
+        portfolioRes1: '/assets/images/portfolio-residential-1.jpg',
+        portfolioRes2: '/assets/images/portfolio-residential-2.jpg',
+        portfolioCom1: '/assets/images/portfolio-commercial-1.jpg',
+        portfolioCom2: '/assets/images/portfolio-commercial-2.jpg',
+        portfolioInt1: '/assets/images/portfolio-interior-1.jpg',
+        portfolioInt2: '/assets/images/portfolio-interior-2.jpg',
+      };
+
+      const SERVICES = [
+        {
+          id: 'architecture',
+          number: '01',
+          title: 'Architecture & Building Design',
+          description: 'Architectural concepts, building layouts, space planning and contemporary design solutions.',
+          image: IMAGES.serviceArchitecture,
+          imageAlt: 'Illustrative contemporary residence featuring warm sandstone walls and horizontal rooflines',
+          enquiryType: 'Residential',
+          highlights: [
+            'Architectural concept development & massing studies',
+            'Functional building layouts & spatial planning',
+            'Contemporary facade articulation & material direction',
+          ],
+        },
+        {
+          id: 'construction',
+          number: '02',
+          title: 'Construction & Contracting',
+          description: 'Construction coordination and execution focused on quality, functionality and project requirements.',
+          image: IMAGES.serviceConstruction,
+          imageAlt: 'Illustrative contemporary concrete and structural steel building under precision construction',
+          enquiryType: 'Commercial',
+          highlights: [
+            'Structured site coordination and contractor alignment',
+            'Execution aligned with architectural drawings and specifications',
+            'Ongoing quality oversight across construction stages',
+          ],
+        },
+        {
+          id: 'interior',
+          number: '03',
+          title: 'Interior Design',
+          description: 'Thoughtfully designed interiors that combine aesthetics, comfort and practical functionality.',
+          image: IMAGES.serviceInterior,
+          imageAlt: 'Illustrative minimalist living room with warm ivory plaster walls, sandstone hearth and oak millwork',
+          enquiryType: 'Interior',
+          highlights: [
+            'Interior spatial flow, joinery and finish palettes',
+            'Lighting direction, textures and custom furniture integration',
+            'Cohesive residential and commercial interior environments',
+          ],
+        },
+        {
+          id: 'planning',
+          number: '04',
+          title: 'Planning & Consultation',
+          description: 'Project planning, design consultation and coordinated solutions from concept to development.',
+          image: IMAGES.servicePlanning,
+          imageAlt: 'Illustrative architectural studio desk with scale wooden model, floor plans and stone material samples',
+          enquiryType: 'Other',
+          highlights: [
+            'Early-stage feasibility thinking and brief definition',
+            'Design consultation and multi-discipline coordination',
+            'Structured roadmap from initial concept to development',
+          ],
+        },
+      ];
+
+      const PORTFOLIO_ITEMS = [
+        {
+          id: 'ref-courtyard-residence',
+          title: 'Courtyard Residence Study',
+          category: 'Residential',
+          enquiryType: 'Residential',
+          modelType: 'residential',
+          image: IMAGES.portfolioRes1,
+          gallery: [IMAGES.portfolioRes1, IMAGES.serviceArchitecture, IMAGES.about],
+          imageAlt: 'Illustrative architectural reference of a warm sandstone and timber courtyard residence with reflecting pool',
+          summary: 'Illustrative residential study exploring warm stone massing, vertical timber screening, and indoor-outdoor courtyard living.',
+          concept: 'Organizes living spaces around a calm central water courtyard to draw natural daylight and cross-ventilation deep into the home.',
+          approach: 'Balances monolithic honed sandstone walls with warm vertical timber louvers and deep roof overhangs for solar shading.',
+          typology: 'Private Courtyard Villa (Reference)',
+          materials: 'Sandstone, Timber Louvers, Charcoal Steel',
+          gridSpan: 'md:col-span-7',
+          aspectClass: 'aspect-[4/3]',
+        },
+        {
+          id: 'ref-limestone-townhouse',
+          title: 'Urban Limestone Residence Study',
+          category: 'Residential',
+          enquiryType: 'Residential',
+          modelType: 'townhouse',
+          image: IMAGES.portfolioRes2,
+          gallery: [IMAGES.portfolioRes2, IMAGES.serviceInterior, IMAGES.portfolioInt1],
+          imageAlt: 'Illustrative architectural reference of a vertical warm limestone townhouse facade with recessed bronze glazing',
+          summary: 'Illustrative multi-level urban home direction balancing honed limestone proportions, recessed glazing, and privacy.',
+          concept: 'A composed vertical street elevation using deeply recessed openings to frame daylight while shielding private living quarters.',
+          approach: 'Pairs warm ivory limestone cladding with dark charcoal bronze window mullions and a sculpted concrete entry canopy.',
+          typology: 'Multi-Level Urban Home (Reference)',
+          materials: 'Honed Limestone, Architectural Concrete, Bronze',
+          gridSpan: 'md:col-span-5',
+          aspectClass: 'aspect-[4/3] md:aspect-[3/4]',
+        },
+        {
+          id: 'ref-commercial-atrium',
+          title: 'Travertine Atrium & Gallery Study',
+          category: 'Commercial',
+          enquiryType: 'Commercial',
+          modelType: 'commercial',
+          image: IMAGES.portfolioCom2,
+          gallery: [IMAGES.portfolioCom2, IMAGES.portfolioCom1, IMAGES.portfolioInt2],
+          imageAlt: 'Illustrative architectural reference of a double-height commercial atrium with monolithic travertine columns and skylight',
+          summary: 'Illustrative commercial lobby direction focused on daylighting, generous vertical proportion, and natural stone.',
+          concept: 'Creates a serene civic-scale arrival volume anchored by tall travertine structural piers and an overhead architectural skylight.',
+          approach: 'Combines acoustic restraint, clear circulation bridges, and natural stone surfaces that age with quiet permanence.',
+          typology: 'Commercial Atrium & Gallery (Reference)',
+          materials: 'Veined Travertine, Clear Glass, Brushed Steel',
+          gridSpan: 'md:col-span-5',
+          aspectClass: 'aspect-[4/3] md:aspect-[3/4]',
+        },
+        {
+          id: 'ref-office-pavilion',
+          title: 'Contemporary Office Pavilion Study',
+          category: 'Commercial',
+          enquiryType: 'Commercial',
+          modelType: 'commercial',
+          image: IMAGES.portfolioCom1,
+          gallery: [IMAGES.portfolioCom1, IMAGES.portfolioCom2, IMAGES.serviceConstruction],
+          imageAlt: 'Illustrative architectural reference of a minimalist commercial building with charcoal facade louvers and sandstone plinth',
+          summary: 'Illustrative commercial architecture direction pairing rhythmic charcoal shading fins with a grounded stone base.',
+          concept: 'Elevates a rhythmic charcoal louvered upper office volume above a warm sandstone public plinth and double-height glass atrium.',
+          approach: 'Integrates passive facade shading, flexible column-free floor plates, and landscaped pedestrian edges.',
+          typology: 'Commercial Headquarters (Reference)',
+          materials: 'Charcoal Louvers, Sandstone Plinth, Curtain Glazing',
+          gridSpan: 'md:col-span-7',
+          aspectClass: 'aspect-[4/3]',
+        },
+        {
+          id: 'ref-monolithic-kitchen',
+          title: 'Monolithic Kitchen & Dining Study',
+          category: 'Interior Design',
+          enquiryType: 'Interior',
+          modelType: 'interior',
+          image: IMAGES.portfolioInt1,
+          gallery: [IMAGES.portfolioInt1, IMAGES.serviceInterior, IMAGES.about],
+          imageAlt: 'Illustrative interior design reference of a minimalist kitchen with honed sandstone island and smoked oak cabinetry',
+          summary: 'Illustrative residential interior direction combining honed sandstone, smoked oak joinery, and quiet natural light.',
+          concept: 'Treats culinary and dining zones as calm architectural furniture anchored by a single monolithic stone island.',
+          approach: 'Conceals storage behind full-height smoked oak millwork while letting warm limewash plaster catch shifting daylight.',
+          typology: 'Residential Interior (Reference)',
+          materials: 'Honed Sandstone, Smoked Oak, Limewash Plaster',
+          gridSpan: 'md:col-span-6',
+          aspectClass: 'aspect-[4/3]',
+        },
+        {
+          id: 'ref-executive-lounge',
+          title: 'Executive Boardroom & Lounge Study',
+          category: 'Interior Design',
+          enquiryType: 'Interior',
+          modelType: 'interior',
+          image: IMAGES.portfolioInt2,
+          gallery: [IMAGES.portfolioInt2, IMAGES.portfolioCom2, IMAGES.servicePlanning],
+          imageAlt: 'Illustrative interior design reference of a contemporary executive boardroom with slatted oak wall and travertine table',
+          summary: 'Illustrative commercial interior direction emphasizing acoustic timber detailing, sculptural stone, and calm focus.',
+          concept: 'Shapes a composed meeting environment where acoustic comfort and natural textures support thoughtful collaboration.',
+          approach: 'Balances slatted natural oak wall treatments with a sculptural travertine table and indirect architectural cove lighting.',
+          typology: 'Commercial Interior (Reference)',
+          materials: 'Slatted Oak, Honed Travertine, Warm Plaster',
+          gridSpan: 'md:col-span-6',
+          aspectClass: 'aspect-[4/3]',
+        },
+      ];
+
+      const EXPLODED_LAYERS = [
+        {
+          id: 'foundation',
+          code: '01 · Foundation',
+          title: 'Foundation & Plinth',
+          offset: 0.0,
+          desc: 'Reinforced concrete raft foundation and stepped travertine plinth anchoring the structure cleanly to site topography.',
+        },
+        {
+          id: 'columns',
+          code: '02 · Structure',
+          title: 'Structural Columns',
+          offset: 1.05,
+          desc: 'Primary vertical load-bearing column grid establishing open spatial spans and structural clarity across every level.',
+        },
+        {
+          id: 'ground',
+          code: '03 · Ground Level',
+          title: 'Ground Floor Plate',
+          offset: 2.0,
+          desc: 'Ground-level architectural floor slab extending seamlessly outward into terraced stone decks and a reflecting court.',
+        },
+        {
+          id: 'upper',
+          code: '04 · Upper Deck',
+          title: 'Upper Floor Slab',
+          offset: 3.15,
+          desc: 'Cantilevered upper-level structural floor deck creating shaded outdoor living zones and dramatic architectural poise.',
+        },
+        {
+          id: 'walls',
+          code: '05 · Enclosure',
+          title: 'Architectural Walls',
+          offset: 4.35,
+          desc: 'Warm sandstone shear planes and charcoal concrete privacy walls defining interior volumes and framing views.',
+        },
+        {
+          id: 'glazing',
+          code: '06 · Facade',
+          title: 'Windows & Glazing',
+          offset: 5.5,
+          desc: 'Floor-to-ceiling low-iron architectural glazing framed in slender dark bronze mullions to maximize daylight.',
+        },
+        {
+          id: 'roof',
+          code: '07 · Crown',
+          title: 'Roof Structure',
+          offset: 6.75,
+          desc: 'Deep overhanging roof plane with recessed skylight aperture, thermal insulation assembly, and minimalist parapet.',
+        },
+      ];
+
+      const TRANSFORM_STAGES = [
+        {
+          eyebrow: 'Stage 01 / 04',
+          title: 'Concept Sketch',
+          desc: 'Every project begins with proportion studies, site orientation diagrams, and spatial massing sketches that translate client aspirations into a clear architectural parti.',
+          bullets: [
+            'Site solar orientation & natural ventilation study',
+            'Early horizontal & vertical massing proportions',
+            'Spatial adjacency and circulation alignment',
+          ],
+        },
+        {
+          eyebrow: 'Stage 02 / 04',
+          title: 'Architectural Wireframe',
+          desc: 'Concepts are resolved into precise technical CAD grids, column axes, slab elevations, and structural envelopes ready for engineering coordination.',
+          bullets: [
+            'Orthographic column grid (Axes A–E) & datum heights',
+            'Cantilever span geometry & structural envelope',
+            'Dimensioned window bays and circulation cores',
+          ],
+        },
+        {
+          eyebrow: 'Stage 03 / 04',
+          title: '3D Structural Model',
+          desc: 'Three-dimensional clay and structural massing models allow clients to inspect volumes, roof overhangs, daylight angles, and spatial depth before materials are locked.',
+          bullets: [
+            'Interactive 3D volume inspection & shadow verification',
+            'Evaluation of cantilevers, loggias, and sightlines',
+            'Coordinated architectural and structural alignment',
+          ],
+        },
+        {
+          eyebrow: 'Stage 04 / 04',
+          title: 'Finished Architectural Visualization',
+          desc: 'Physically grounded sandstone, concrete, timber, glass, and lighting bring the design to life so every material decision is clear prior to construction.',
+          bullets: [
+            'Realistic sandstone, concrete & warm interior lighting',
+            'Integrated landscape, reflecting pool & facade finishes',
+            'Clear visual benchmark guiding construction execution',
+          ],
+        },
+      ];
+
+      const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isCompactDevice = window.innerWidth < 768;
+
+      function isWebGLAvailable() {
+        try {
+          const canvas = document.createElement('canvas');
+          return !!(
+            window.WebGLRenderingContext &&
+            (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+          );
+        } catch (e) {
+          return false;
+        }
+      }
+
+      const webglSupported = typeof THREE !== 'undefined' && isWebGLAvailable();
+
+      // ----------------------------------------------------------------------
+      // HELPERS: SMOOTH SCROLL, MAGNETIC BUTTONS, CUSTOM CURSOR
+      // ----------------------------------------------------------------------
+      function scrollToSection(id, focusContact) {
+        closeMobileMenu();
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+        }
+        if (focusContact) {
+          window.setTimeout(function () {
+            const nameInput = document.getElementById('fullName');
+            if (nameInput) nameInput.focus({ preventScroll: true });
+          }, 600);
+        }
+      }
+
+      function prefillAndScrollToContact(projectType) {
+        closePortfolioModal();
+        const sel = document.getElementById('projectType');
+        if (sel && projectType) sel.value = projectType;
+        const successPanel = document.getElementById('contact-success-panel');
+        const formEl = document.getElementById('contact-form');
+        if (successPanel && formEl && !successPanel.classList.contains('hidden')) {
+          successPanel.classList.add('hidden');
+          formEl.classList.remove('hidden');
+        }
+        scrollToSection('contact', true);
+      }
+
+      // Wire generic scroll & enquire triggers via delegation
+      document.addEventListener('click', function (e) {
+        const scrollBtn = e.target.closest('[data-scroll-to]');
+        if (scrollBtn) {
+          const targetId = scrollBtn.getAttribute('data-scroll-to');
+          const shouldFocus = scrollBtn.getAttribute('data-focus-contact') === 'true';
+          if (targetId) scrollToSection(targetId, shouldFocus);
+          return;
+        }
+        const enquireBtn = e.target.closest('[data-enquire-type]');
+        if (enquireBtn) {
+          prefillAndScrollToContact(enquireBtn.getAttribute('data-enquire-type'));
+        }
+      });
+
+      // Sticky header & Back-to-top visibility
+      const headerEl = document.getElementById('site-header');
+      const backToTopEl = document.getElementById('back-to-top-btn');
+      function handleGlobalScroll() {
+        const y = window.scrollY || window.pageYOffset;
+        if (headerEl) headerEl.classList.toggle('is-scrolled', y > 36);
+        if (backToTopEl) {
+          const show = y > 540;
+          backToTopEl.classList.toggle('opacity-100', show);
+          backToTopEl.classList.toggle('translate-y-0', show);
+          backToTopEl.classList.toggle('pointer-events-auto', show);
+          backToTopEl.classList.toggle('opacity-0', !show);
+          backToTopEl.classList.toggle('translate-y-3', !show);
+          backToTopEl.classList.toggle('pointer-events-none', !show);
+        }
+      }
+      window.addEventListener('scroll', handleGlobalScroll, { passive: true });
+      handleGlobalScroll();
+
+      // Active navigation section observer
+      const navBtns = Array.from(document.querySelectorAll('[data-nav-id]'));
+      if ('IntersectionObserver' in window) {
+        const navObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                const activeId = entry.target.id;
+                navBtns.forEach(function (btn) {
+                  btn.classList.toggle('is-active', btn.getAttribute('data-nav-id') === activeId);
+                });
+              }
+            });
+          },
+          { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 }
+        );
+        ['home', 'about', 'services', 'projects', 'process', 'contact'].forEach(function (id) {
+          const sec = document.getElementById(id);
+          if (sec) navObserver.observe(sec);
+        });
+      }
+
+      // Scroll reveal observer
+      const revealEls = Array.from(document.querySelectorAll('.vmv-reveal'));
+      if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        const revObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                revObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -28px 0px' }
+        );
+        revealEls.forEach(function (el) { revObserver.observe(el); });
+      }
+
+      // Mobile Navigation Drawer
+      const mobileToggle = document.getElementById('mobile-menu-toggle');
+      const mobileDrawer = document.getElementById('mobile-nav-drawer');
+      const mobilePanel = document.getElementById('mobile-nav-panel');
+      const mobileBackdrop = document.getElementById('mobile-nav-backdrop');
+      const iconOpen = document.getElementById('mobile-icon-open');
+      const iconClose = document.getElementById('mobile-icon-close');
+      let mobileOpen = false;
+
+      function setMobileMenu(open) {
+        mobileOpen = open;
+        if (!mobileDrawer || !mobilePanel || !mobileToggle) return;
+        mobileToggle.setAttribute('aria-expanded', String(open));
+        mobileDrawer.setAttribute('aria-hidden', String(!open));
+        mobileDrawer.classList.toggle('opacity-100', open);
+        mobileDrawer.classList.toggle('pointer-events-auto', open);
+        mobileDrawer.classList.toggle('opacity-0', !open);
+        mobileDrawer.classList.toggle('pointer-events-none', !open);
+        mobilePanel.classList.toggle('translate-x-0', open);
+        mobilePanel.classList.toggle('translate-x-full', !open);
+        if (iconOpen && iconClose) {
+          iconOpen.classList.toggle('hidden', open);
+          iconClose.classList.toggle('hidden', !open);
+        }
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      function closeMobileMenu() { if (mobileOpen) setMobileMenu(false); }
+      if (mobileToggle) mobileToggle.addEventListener('click', function () { setMobileMenu(!mobileOpen); });
+      if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
+
+      // Desktop-only subtle custom architectural cursor & magnetic CTAs
+      if (!prefersReducedMotion && window.matchMedia && window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 1024) {
+        const ring = document.getElementById('vmv-cursor-ring');
+        const dot = document.getElementById('vmv-cursor-dot');
+        let mx = -100, my = -100, rx = -100, ry = -100;
+        let cursorActive = false;
+
+        window.addEventListener('mousemove', function (e) {
+          mx = e.clientX;
+          my = e.clientY;
+          if (!cursorActive && ring && dot) {
+            cursorActive = true;
+            ring.classList.add('is-active');
+            dot.classList.add('is-active');
+          }
+          if (dot) dot.style.transform = 'translate3d(' + (mx - 2) + 'px,' + (my - 2) + 'px,0)';
+          const hovering = e.target && e.target.closest('button, a, input, select, textarea, canvas');
+          if (ring) ring.classList.toggle('is-hovering', !!hovering);
+        }, { passive: true });
+
+        function tickCursor() {
+          if (cursorActive && ring) {
+            rx += (mx - rx) * 0.16;
+            ry += (my - ry) * 0.16;
+            const half = ring.classList.contains('is-hovering') ? 22 : 15;
+            ring.style.transform = 'translate3d(' + (rx - half) + 'px,' + (ry - half) + 'px,0)';
+          }
+          window.requestAnimationFrame(tickCursor);
+        }
+        window.requestAnimationFrame(tickCursor);
+
+        // Subtle magnetic hover nudge on primary CTA buttons
+        document.querySelectorAll('.vmv-magnetic').forEach(function (btn) {
+          btn.addEventListener('mousemove', function (e) {
+            const rect = btn.getBoundingClientRect();
+            const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.12;
+            const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.12;
+            btn.style.transform = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
+          });
+          btn.addEventListener('mouseleave', function () {
+            btn.style.transform = 'translate3d(0,0,0)';
+          });
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // RENDER SERVICES SECTION
+      // ----------------------------------------------------------------------
+      let expandedServiceId = null;
+      const servicesGrid = document.getElementById('services-grid');
+
+      function renderServices() {
+        if (!servicesGrid) return;
+        servicesGrid.innerHTML = SERVICES.map(function (svc) {
+          const expanded = expandedServiceId === svc.id;
+          return (
+            '<article class="group bg-[#FFFFFF] border border-[#E7E2D8] hover:border-[#B5A48A] transition-colors duration-300 flex flex-col h-full">' +
+            '<div class="relative overflow-hidden aspect-[4/3] bg-[#EDE9E0]">' +
+            '<img src="' + svc.image + '" alt="' + svc.imageAlt + '" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />' +
+            '<span class="absolute top-4 left-4 bg-[#22221F]/90 text-[#EDE9E0] text-[11px] tracking-[0.2em] px-3 py-1.5 font-medium">' + svc.number + '</span>' +
+            '</div>' +
+            '<div class="p-6 sm:p-8 flex flex-col flex-1">' +
+            '<h3 class="font-serif-editorial vmv-sub-heading font-medium text-[#22221F] mb-3">' + svc.title + '</h3>' +
+            '<p class="text-[15px] leading-[1.75] text-[#5E5E5A] font-light mb-6">' + svc.description + '</p>' +
+            (expanded
+              ? '<div class="mb-6 pt-5 border-t border-[#ECE7DE]">' +
+              '<p class="text-[11px] tracking-[0.18em] uppercase text-[#B5A48A] font-medium mb-3">Key Focus Areas</p>' +
+              '<ul class="space-y-2 text-sm text-[#4A4A46]">' +
+              svc.highlights.map(function (h) {
+                return '<li class="flex items-start gap-2.5"><span class="w-1.5 h-1.5 bg-[#B5A48A] mt-2 shrink-0"></span><span>' + h + '</span></li>';
+              }).join('') +
+              '</ul>' +
+              '</div>'
+              : '') +
+            '<div class="mt-auto pt-5 border-t border-[#ECE7DE] flex flex-wrap items-center justify-between gap-4">' +
+            '<button type="button" data-service-toggle="' + svc.id + '" aria-expanded="' + expanded + '" class="text-xs tracking-[0.14em] uppercase text-[#777777] hover:text-[#22221F] transition-colors py-1 min-h-[36px]">' +
+            (expanded ? 'Show Less' : 'Learn More') +
+            '</button>' +
+            '<button type="button" data-enquire-type="' + svc.enquiryType + '" class="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium text-[#22221F] group-hover:text-[#8E7C61] transition-colors py-1 min-h-[36px]">' +
+            '<span>Enquire</span>' +
+            '<i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"></i>' +
+            '</button>' +
+            '</div>' +
+            '</div>' +
+            '</article>'
+          );
+        }).join('');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      if (servicesGrid) {
+        servicesGrid.addEventListener('click', function (e) {
+          const btn = e.target.closest('[data-service-toggle]');
+          if (!btn) return;
+          const id = btn.getAttribute('data-service-toggle');
+          expandedServiceId = expandedServiceId === id ? null : id;
+          renderServices();
+        });
+        renderServices();
+      }
+
+      // ----------------------------------------------------------------------
+      // PORTFOLIO FILTERING & IMMERSIVE MODAL
+      // ----------------------------------------------------------------------
+      const CATEGORIES = ['All Projects', 'Residential', 'Commercial', 'Interior Design'];
+      let activePortfolioCategory = 'All Projects';
+      const filtersEl = document.getElementById('portfolio-filters');
+      const portfolioGridEl = document.getElementById('portfolio-grid');
+
+      function renderPortfolioFilters() {
+        if (!filtersEl) return;
+        filtersEl.innerHTML = CATEGORIES.map(function (cat) {
+          const active = cat === activePortfolioCategory;
+          const count = cat === 'All Projects'
+            ? PORTFOLIO_ITEMS.length
+            : PORTFOLIO_ITEMS.filter(function (p) { return p.category === cat; }).length;
+          return (
+            '<button type="button" role="tab" aria-selected="' + active + '" data-portfolio-cat="' + cat + '" class="px-4 py-2.5 text-xs tracking-[0.13em] uppercase transition-colors min-h-[42px] border ' +
+            (active
+              ? 'bg-[#22221F] text-[#FFFFFF] border-[#22221F]'
+              : 'bg-[#FFFFFF] text-[#555555] border-[#E4DFD5] hover:border-[#22221F] hover:text-[#22221F]') +
+            '">' +
+            '<span>' + cat + '</span>' +
+            '<span class="ml-2 text-[10px] ' + (active ? 'text-[#B5A48A]' : 'text-[#8C8880]') + '">' + count + '</span>' +
+            '</button>'
+          );
+        }).join('');
+      }
+
+      function renderPortfolioGrid() {
+        if (!portfolioGridEl) return;
+        const items = activePortfolioCategory === 'All Projects'
+          ? PORTFOLIO_ITEMS
+          : PORTFOLIO_ITEMS.filter(function (i) { return i.category === activePortfolioCategory; });
+
+        portfolioGridEl.innerHTML = items.map(function (item) {
+          const spanClass = activePortfolioCategory === 'All Projects' ? item.gridSpan : 'md:col-span-6';
+          const aspectClass = activePortfolioCategory === 'All Projects' ? item.aspectClass : 'aspect-[4/3]';
+          return (
+            '<article class="' + spanClass + ' group relative overflow-hidden bg-[#22221F]">' +
+            '<button type="button" data-open-project="' + item.id + '" class="block w-full text-left relative overflow-hidden ' + aspectClass + '" aria-label="Inspect ' + item.title + ' (' + item.category + ')">' +
+            '<img src="' + item.image + '" alt="' + item.imageAlt + '" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]" />' +
+            '<div class="absolute inset-0 bg-gradient-to-t from-[#22221F]/88 via-[#22221F]/22 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300"></div>' +
+
+            '<div class="absolute inset-x-0 bottom-0 p-5 sm:p-7 flex items-end justify-between gap-4">' +
+            '<div class="transition-transform duration-300 group-hover:-translate-y-1">' +
+            '<p class="text-[11px] tracking-[0.2em] uppercase text-[#B5A48A] mb-1.5">' + item.category + '</p>' +
+            '<h3 class="font-serif-editorial text-2xl sm:text-[28px] font-normal text-[#FFFFFF] leading-tight">' + item.title + '</h3>' +
+            '</div>' +
+            '<span class="w-10 h-10 border border-[#EDE9E0]/45 text-[#EDE9E0] inline-flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:bg-[#EDE9E0] group-hover:text-[#22221F]">' +
+            '<i data-lucide="arrow-up-right" class="w-4 h-4"></i>' +
+            '</span>' +
+            '</div>' +
+            '</button>' +
+            '</article>'
+          );
+        }).join('');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      if (filtersEl) {
+        filtersEl.addEventListener('click', function (e) {
+          const btn = e.target.closest('[data-portfolio-cat]');
+          if (!btn) return;
+          activePortfolioCategory = btn.getAttribute('data-portfolio-cat');
+          renderPortfolioFilters();
+          renderPortfolioGrid();
+        });
+      }
+
+      // Portfolio Detail Modal + Interactive 3D Demo Model
+      const pmModal = document.getElementById('portfolio-modal');
+      const pmMainImg = document.getElementById('pm-main-img');
+      const pm3dStage = document.getElementById('pm-3d-stage');
+      const pmThumbs = document.getElementById('pm-thumbs');
+      const pmModePhotos = document.getElementById('pm-mode-photos');
+      const pmMode3d = document.getElementById('pm-mode-3d');
+      const pmEnquireBtn = document.getElementById('pm-enquire-btn');
+      let currentModalProject = null;
+      let modal3dController = null;
+
+      function setModalViewMode(mode) {
+        const is3d = mode === '3d';
+        if (pmMainImg) pmMainImg.classList.toggle('hidden', is3d);
+        if (pmThumbs) pmThumbs.classList.toggle('hidden', is3d);
+        if (pm3dStage) pm3dStage.classList.toggle('hidden', !is3d);
+        if (pmModePhotos && pmMode3d) {
+          pmModePhotos.className = is3d
+            ? 'px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase border border-[#DFDAD0] bg-[#FFFFFF] text-[#22221F] hover:border-[#22221F] min-h-[36px]'
+            : 'px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase bg-[#22221F] text-[#FFFFFF] min-h-[36px]';
+          pmMode3d.className = is3d
+            ? 'px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase bg-[#22221F] text-[#FFFFFF] min-h-[36px]'
+            : 'px-3.5 py-1.5 text-[11px] tracking-[0.14em] uppercase border border-[#DFDAD0] bg-[#FFFFFF] text-[#22221F] hover:border-[#22221F] min-h-[36px]';
+        }
+        if (is3d && currentModalProject) {
+          initModal3DScene(currentModalProject.modelType);
+        } else if (modal3dController) {
+          modal3dController.pause();
+        }
+      }
+
+      function openPortfolioModal(itemId) {
+        const item = PORTFOLIO_ITEMS.find(function (p) { return p.id === itemId; });
+        if (!item || !pmModal) return;
+        currentModalProject = item;
+        document.getElementById('pm-category').textContent = item.category;
+        document.getElementById('pm-title').textContent = item.title;
+        document.getElementById('pm-description').textContent = item.summary;
+        document.getElementById('pm-concept').textContent = item.concept;
+        document.getElementById('pm-approach').textContent = item.approach;
+        document.getElementById('pm-detail-typology').textContent = item.typology;
+        document.getElementById('pm-detail-materials').textContent = item.materials;
+        if (pmMainImg) {
+          pmMainImg.src = item.image;
+          pmMainImg.alt = item.imageAlt;
+        }
+        if (pmThumbs) {
+          pmThumbs.innerHTML = item.gallery.map(function (imgSrc, idx) {
+            return (
+              '<button type="button" data-thumb-src="' + imgSrc + '" class="shrink-0 w-24 h-16 overflow-hidden border ' +
+              (idx === 0 ? 'border-[#22221F]' : 'border-[#E4DFD5] opacity-75 hover:opacity-100') +
+              '"><img src="' + imgSrc + '" alt="Project reference view ' + (idx + 1) + '" class="w-full h-full object-cover" /></button>'
+            );
+          }).join('');
+        }
+        if (pmEnquireBtn) pmEnquireBtn.setAttribute('data-enquire-type', item.enquiryType);
+        if (pmMode3d) pmMode3d.classList.toggle('hidden', !webglSupported);
+        setModalViewMode('photos');
+        pmModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePortfolioModal() {
+        if (!pmModal || pmModal.classList.contains('hidden')) return;
+        pmModal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (modal3dController) modal3dController.pause();
+      }
+
+      if (portfolioGridEl) {
+        portfolioGridEl.addEventListener('click', function (e) {
+          const btn = e.target.closest('[data-open-project]');
+          if (btn) openPortfolioModal(btn.getAttribute('data-open-project'));
+        });
+      }
+      if (pmThumbs) {
+        pmThumbs.addEventListener('click', function (e) {
+          const btn = e.target.closest('[data-thumb-src]');
+          if (!btn || !pmMainImg) return;
+          pmMainImg.src = btn.getAttribute('data-thumb-src');
+          pmThumbs.querySelectorAll('button').forEach(function (b) {
+            b.className = b === btn
+              ? 'shrink-0 w-24 h-16 overflow-hidden border border-[#22221F]'
+              : 'shrink-0 w-24 h-16 overflow-hidden border border-[#E4DFD5] opacity-75 hover:opacity-100';
+          });
+        });
+      }
+      if (pmModePhotos) pmModePhotos.addEventListener('click', function () { setModalViewMode('photos'); });
+      if (pmMode3d) pmMode3d.addEventListener('click', function () { setModalViewMode('3d'); });
+      const pmCloseBtn = document.getElementById('pm-close-btn');
+      if (pmCloseBtn) pmCloseBtn.addEventListener('click', closePortfolioModal);
+      if (pmModal) {
+        pmModal.addEventListener('click', function (e) {
+          if (e.target === pmModal) closePortfolioModal();
+        });
+      }
+
+      renderPortfolioFilters();
+      renderPortfolioGrid();
+
+      // ----------------------------------------------------------------------
+      // PRIVACY POLICY MODAL
+      // ----------------------------------------------------------------------
+      const privacyModal = document.getElementById('privacy-modal');
+      function openPrivacy() {
+        if (!privacyModal) return;
+        privacyModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closePrivacy() {
+        if (!privacyModal) return;
+        privacyModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+      const openPrivacyBtn = document.getElementById('open-privacy-btn');
+      const closePrivacyX = document.getElementById('close-privacy-x');
+      const closePrivacyBtn = document.getElementById('close-privacy-btn');
+      if (openPrivacyBtn) openPrivacyBtn.addEventListener('click', openPrivacy);
+      if (closePrivacyX) closePrivacyX.addEventListener('click', closePrivacy);
+      if (closePrivacyBtn) closePrivacyBtn.addEventListener('click', closePrivacy);
+      if (privacyModal) {
+        privacyModal.addEventListener('click', function (e) {
+          if (e.target === privacyModal) closePrivacy();
+        });
+      }
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          closeMobileMenu();
+          closePortfolioModal();
+          closePrivacy();
+        }
+      });
+
+      // ----------------------------------------------------------------------
+      // ARCHITECTURAL DESIGN TRANSFORMATION STAGE CONTROLLER
+      // ----------------------------------------------------------------------
+      let currentTransformStage = 0;
+      let transformTimer = null;
+      let transform3dController = null;
+
+      function setTransformStage(idx) {
+        currentTransformStage = ((idx % 4) + 4) % 4;
+        const info = TRANSFORM_STAGES[currentTransformStage];
+        document.getElementById('transform-stage-eyebrow').textContent = info.eyebrow;
+        document.getElementById('transform-stage-title').textContent = info.title;
+        document.getElementById('transform-stage-desc').textContent = info.desc;
+        document.getElementById('transform-stage-bullets').innerHTML = info.bullets
+          .map(function (b) {
+            return '<li class="flex items-start gap-2.5"><span class="w-1.5 h-1.5 bg-[#B5A48A] mt-2 shrink-0"></span><span>' + b + '</span></li>';
+          })
+          .join('');
+
+        document.querySelectorAll('.transform-tab-btn').forEach(function (tab, i) {
+          const active = i === currentTransformStage;
+          tab.setAttribute('aria-selected', String(active));
+          tab.className = active
+            ? 'transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#22221F] text-[#FFFFFF] border-[#22221F]'
+            : 'transform-tab-btn text-left p-4 sm:p-5 border transition-colors bg-[#FFFFFF] text-[#22221F] border-[#E4DFD5] hover:border-[#22221F]';
+        });
+
+        document.querySelectorAll('.transform-stage-panel').forEach(function (panel, i) {
+          const active = i === currentTransformStage;
+          panel.classList.toggle('opacity-100', active);
+          panel.classList.toggle('opacity-0', !active);
+          panel.classList.toggle('pointer-events-none', !active);
+        });
+
+        if (currentTransformStage === 2 && webglSupported) {
+          initTransform3DScene();
+          if (transform3dController) transform3dController.resume();
+        } else if (transform3dController) {
+          transform3dController.pause();
+        }
+      }
+
+      document.querySelectorAll('.transform-tab-btn').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          stopTransformAutoplay();
+          setTransformStage(Number(tab.getAttribute('data-transform-stage')));
+        });
+      });
+      document.getElementById('transform-prev-btn').addEventListener('click', function () {
+        stopTransformAutoplay();
+        setTransformStage(currentTransformStage - 1);
+      });
+      document.getElementById('transform-next-btn').addEventListener('click', function () {
+        stopTransformAutoplay();
+        setTransformStage(currentTransformStage + 1);
+      });
+
+      const transformAutoplayBtn = document.getElementById('transform-autoplay-btn');
+      function stopTransformAutoplay() {
+        if (transformTimer) {
+          window.clearInterval(transformTimer);
+          transformTimer = null;
+        }
+        if (transformAutoplayBtn) {
+          transformAutoplayBtn.innerHTML = '<i data-lucide="play" class="w-3.5 h-3.5"></i><span>Step Through Sequence</span>';
+          if (window.lucide) window.lucide.createIcons();
+        }
+      }
+      if (transformAutoplayBtn) {
+        transformAutoplayBtn.addEventListener('click', function () {
+          if (transformTimer) {
+            stopTransformAutoplay();
+          } else {
+            setTransformStage(0);
+            transformAutoplayBtn.innerHTML = '<i data-lucide="square" class="w-3.5 h-3.5"></i><span>Stop Sequence</span>';
+            if (window.lucide) window.lucide.createIcons();
+            transformTimer = window.setInterval(function () {
+              if (currentTransformStage >= 3) {
+                stopTransformAutoplay();
+              } else {
+                setTransformStage(currentTransformStage + 1);
+              }
+            }, 2200);
+          }
+        });
+      }
+      setTransformStage(0);
+
+      // ----------------------------------------------------------------------
+      // CONTACT FORM VALIDATION & SPAM PROTECTION
+      // ----------------------------------------------------------------------
+      const contactForm = document.getElementById('contact-form');
+      const formLoadedAt = Date.now();
+
+      function showFieldError(field, msg) {
+        const errEl = document.getElementById('err-' + field);
+        const inputEl = document.getElementById(field);
+        if (errEl) {
+          errEl.textContent = msg || '';
+          errEl.classList.toggle('hidden', !msg);
+        }
+        if (inputEl) {
+          inputEl.classList.toggle('border-[#B94A3E]', !!msg);
+          inputEl.classList.toggle('border-[#DFDAD0]', !msg);
+          inputEl.setAttribute('aria-invalid', msg ? 'true' : 'false');
+        }
+      }
+
+      if (contactForm) {
+        ['fullName', 'email', 'phone', 'projectType', 'projectLocation', 'projectDescription'].forEach(function (f) {
+          const el = document.getElementById(f);
+          if (el) {
+            el.addEventListener('input', function () { showFieldError(f, ''); });
+            el.addEventListener('change', function () { showFieldError(f, ''); });
+          }
+        });
+
+        contactForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const errBanner = document.getElementById('contact-error-banner');
+          const errText = document.getElementById('contact-error-text');
+          const submitBtn = document.getElementById('contact-submit-btn');
+          const submitLabel = document.getElementById('contact-submit-label');
+
+          const websiteTrap = (document.getElementById('vmv-website').value || '').trim();
+          if (websiteTrap !== '') {
+            contactForm.classList.add('hidden');
+            document.getElementById('contact-success-panel').classList.remove('hidden');
+            document.getElementById('contact-success-msg').textContent = 'Thank you. Your enquiry has been received.';
+            return;
+          }
+
+          if (Date.now() - formLoadedAt < 1000) {
+            errText.textContent = 'Please take a moment to review your details before submitting.';
+            errBanner.classList.remove('hidden');
+            return;
+          }
+
+          const fullName = document.getElementById('fullName').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const phone = document.getElementById('phone').value.trim();
+          const projectType = document.getElementById('projectType').value;
+          const projectLocation = document.getElementById('projectLocation').value.trim();
+          const projectDescription = document.getElementById('projectDescription').value.trim();
+
+          let hasError = false;
+          if (fullName.length < 2) { showFieldError('fullName', 'Please enter your full name.'); hasError = true; } else showFieldError('fullName', '');
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('email', 'Please enter a valid email address.'); hasError = true; } else showFieldError('email', '');
+          if (phone) {
+            const digits = phone.replace(/[^\d]/g, '');
+            if (digits.length < 7 || digits.length > 15) { showFieldError('phone', 'Please enter a valid phone number or leave blank.'); hasError = true; }
+            else showFieldError('phone', '');
+          } else showFieldError('phone', '');
+          if (!projectType) { showFieldError('projectType', 'Please select a project type.'); hasError = true; } else showFieldError('projectType', '');
+          if (!projectLocation) { showFieldError('projectLocation', 'Please enter the city or project location.'); hasError = true; } else showFieldError('projectLocation', '');
+          if (projectDescription.length < 15) { showFieldError('projectDescription', 'Please share a brief overview (at least 15 characters).'); hasError = true; } else showFieldError('projectDescription', '');
+
+          if (hasError) {
+            errText.textContent = 'Please review the highlighted fields below.';
+            errBanner.classList.remove('hidden');
+            return;
+          }
+
+          errBanner.classList.add('hidden');
+          submitBtn.disabled = true;
+          submitLabel.textContent = 'Sending...';
+
+          const payload = { fullName, email, phone, projectType, projectLocation, projectDescription };
+          try {
+            let successMessage = '';
+            if (SITE_CONFIG.formEndpoint) {
+              const res = await fetch(SITE_CONFIG.formEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(payload),
+              });
+              if (!res.ok) throw new Error('Submission failed');
+              successMessage = 'Thank you for reaching out to VMV Design Groups. Your enquiry has been delivered and our team will respond shortly.';
+            } else {
+              await new Promise(function (r) { window.setTimeout(r, 420); });
+              successMessage = 'Thank you for reaching out to VMV Design Groups. Your project enquiry has been received and our team will be in touch shortly.';
+            }
+
+            document.getElementById('contact-success-msg').textContent = successMessage;
+            document.getElementById('contact-success-summary').innerHTML =
+              '<p><span class="text-[#777777]">Name:</span> ' + fullName.replace(/</g, '&lt;') + '</p>' +
+              '<p><span class="text-[#777777]">Project Type:</span> ' + projectType + '</p>' +
+              '<p><span class="text-[#777777]">Location:</span> ' + projectLocation.replace(/</g, '&lt;') + '</p>';
+            contactForm.reset();
+            contactForm.classList.add('hidden');
+            document.getElementById('contact-success-panel').classList.remove('hidden');
+          } catch (err) {
+            errText.textContent = 'We could not send your enquiry right now. Please try again in a moment.';
+            errBanner.classList.remove('hidden');
+          } finally {
+            submitBtn.disabled = false;
+            submitLabel.textContent = 'Send Enquiry';
+          }
+        });
+
+        document.getElementById('contact-reset-btn').addEventListener('click', function () {
+          document.getElementById('contact-success-panel').classList.add('hidden');
+          contactForm.classList.remove('hidden');
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // SHARED THREE.JS ARCHITECTURAL BUILDING BUILDER (REALISTIC LAYERED PBR)
+      // ----------------------------------------------------------------------
+      function createArchitecturalMaterials(clayMode) {
+        if (clayMode) {
+          return {
+            plinth: new THREE.MeshStandardMaterial({ color: 0xded9cf, roughness: 0.9, metalness: 0.0 }),
+            concrete: new THREE.MeshStandardMaterial({ color: 0xcbc4b8, roughness: 0.88, metalness: 0.0 }),
+            sandstone: new THREE.MeshStandardMaterial({ color: 0xd8d0c3, roughness: 0.85, metalness: 0.0 }),
+            timber: new THREE.MeshStandardMaterial({ color: 0xc6bba9, roughness: 0.85, metalness: 0.0 }),
+            mullion: new THREE.MeshStandardMaterial({ color: 0x8e887e, roughness: 0.7, metalness: 0.1 }),
+            glass: new THREE.MeshStandardMaterial({ color: 0xeae5dc, roughness: 0.3, metalness: 0.05, transparent: true, opacity: 0.45 }),
+            water: new THREE.MeshStandardMaterial({ color: 0xd0cbc2, roughness: 0.4, metalness: 0.1 }),
+            interiorGlow: new THREE.MeshStandardMaterial({ color: 0xe6e0d4, roughness: 0.8 }),
+            foliage: new THREE.MeshStandardMaterial({ color: 0xbcb6ab, roughness: 0.9 }),
+            trunk: new THREE.MeshStandardMaterial({ color: 0x999287, roughness: 0.9 }),
+          };
+        }
+        return {
+          plinth: new THREE.MeshStandardMaterial({ color: 0xd9d1c3, roughness: 0.82, metalness: 0.04 }),
+          concrete: new THREE.MeshStandardMaterial({ color: 0x2c2c28, roughness: 0.76, metalness: 0.08 }),
+          sandstone: new THREE.MeshStandardMaterial({ color: 0xb9a68a, roughness: 0.78, metalness: 0.04 }),
+          timber: new THREE.MeshStandardMaterial({ color: 0x8f6f4c, roughness: 0.68, metalness: 0.05 }),
+          mullion: new THREE.MeshStandardMaterial({ color: 0x1e1e1b, roughness: 0.42, metalness: 0.55 }),
+          glass: new THREE.MeshStandardMaterial({
+            color: 0x9fb2b8,
+            roughness: 0.12,
+            metalness: 0.25,
+            transparent: true,
+            opacity: 0.38,
+          }),
+          water: new THREE.MeshStandardMaterial({ color: 0x1c282b, roughness: 0.12, metalness: 0.6 }),
+          interiorGlow: new THREE.MeshStandardMaterial({
+            color: 0xf4dec0,
+            emissive: 0xffc680,
+            emissiveIntensity: 0.45,
+            roughness: 0.6,
+          }),
+          foliage: new THREE.MeshStandardMaterial({ color: 0x4b5642, roughness: 0.88, metalness: 0.02 }),
+          trunk: new THREE.MeshStandardMaterial({ color: 0x4a3f35, roughness: 0.92 }),
+        };
+      }
+
+      function addBox(parent, w, h, d, x, y, z, mat, castShadow) {
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+        mesh.position.set(x, y, z);
+        if (castShadow !== false) {
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+        } else {
+          mesh.receiveShadow = true;
+        }
+        parent.add(mesh);
+        return mesh;
+      }
+
+      function buildLayeredArchitecturalVilla(clayMode) {
+        const mats = createArchitecturalMaterials(clayMode);
+        const root = new THREE.Group();
+        const layers = {
+          foundation: new THREE.Group(),
+          columns: new THREE.Group(),
+          ground: new THREE.Group(),
+          upper: new THREE.Group(),
+          walls: new THREE.Group(),
+          glazing: new THREE.Group(),
+          roof: new THREE.Group(),
+          landscape: new THREE.Group(),
+        };
+
+        Object.keys(layers).forEach(function (k) { root.add(layers[k]); });
+
+        // 01. FOUNDATION & STEPPED PLINTH
+        addBox(layers.foundation, 14.5, 0.45, 11.2, 0, -0.22, 0, mats.plinth, false);
+        addBox(layers.foundation, 11.4, 0.25, 7.6, -0.4, 0.12, -0.5, mats.plinth);
+        // Architectural entry steps
+        addBox(layers.foundation, 2.8, 0.12, 0.55, -2.8, 0.06, 3.6, mats.plinth);
+        addBox(layers.foundation, 2.8, 0.12, 0.55, -2.8, 0.18, 3.2, mats.plinth);
+
+        // 02. STRUCTURAL COLUMNS (Realistic architectural grid)
+        const colCoords = [
+          [-5.2, -3.4], [-1.8, -3.4], [1.6, -3.4], [4.6, -3.4],
+          [-5.2, 2.4], [-1.8, 2.4], [1.6, 2.4], [4.6, 2.4],
+          [4.6, 0.0],
+        ];
+        colCoords.forEach(function (pt) {
+          addBox(layers.columns, 0.34, 2.65, 0.34, pt[0], 1.56, pt[1], mats.concrete);
+        });
+        // Upper floor slender structural columns
+        [[-3.6, -3.1], [0.2, -3.1], [4.2, -3.1], [-3.6, 2.2], [0.2, 2.2], [4.2, 2.2]].forEach(function (pt) {
+          addBox(layers.columns, 0.28, 2.55, 0.28, pt[0], 4.42, pt[1], mats.concrete);
+        });
+
+        // 03. GROUND FLOOR PLATE + REFLECTING POOL
+        addBox(layers.ground, 10.6, 0.18, 6.4, -0.3, 0.33, -0.5, mats.plinth);
+        // Reflecting pool basin & water plane
+        addBox(layers.ground, 5.2, 0.18, 2.7, 2.3, 0.11, 3.65, mats.concrete);
+        const waterMesh = addBox(layers.ground, 4.85, 0.06, 2.35, 2.3, 0.21, 3.65, mats.water, false);
+        // Warm ground-floor interior ceiling & floor glow plane
+        addBox(layers.ground, 8.8, 0.08, 4.8, -0.6, 2.82, -0.6, mats.interiorGlow, false);
+
+        // 04. UPPER FLOOR CANTILEVERED SLAB + CORE STAIRWELL
+        addBox(layers.upper, 11.2, 0.36, 6.4, 0.5, 3.06, -0.3, mats.concrete);
+        // Timber soffit beneath the cantilever
+        addBox(layers.upper, 10.9, 0.07, 6.1, 0.5, 2.86, -0.3, mats.timber, false);
+        // Internal architectural stair core
+        addBox(layers.upper, 1.8, 2.5, 2.2, -1.6, 1.65, -1.7, mats.sandstone);
+        // Warm upper interior ceiling glow
+        addBox(layers.upper, 9.6, 0.08, 4.9, 0.5, 5.64, -0.4, mats.interiorGlow, false);
+
+        // 05. ARCHITECTURAL WALLS (Sandstone ground + Charcoal upper cantilever)
+        // Ground sandstone shear walls
+        addBox(layers.walls, 2.4, 2.52, 0.38, -4.1, 1.65, 2.4, mats.sandstone);
+        addBox(layers.walls, 0.38, 2.52, 5.9, -5.2, 1.65, -0.5, mats.sandstone);
+        addBox(layers.walls, 9.8, 2.52, 0.38, -0.4, 1.65, -3.4, mats.sandstone);
+        addBox(layers.walls, 0.38, 2.52, 3.4, 4.6, 1.65, -1.7, mats.sandstone);
+        // Upper cantilevered charcoal concrete enclosure
+        addBox(layers.walls, 0.42, 2.58, 6.2, -4.85, 4.48, -0.3, mats.concrete);
+        addBox(layers.walls, 0.42, 2.58, 6.2, 5.85, 4.48, -0.3, mats.concrete);
+        addBox(layers.walls, 10.7, 2.58, 0.38, 0.5, 4.48, -3.25, mats.concrete);
+        // Vertical timber privacy screen on upper side
+        for (let i = 0; i < 9; i++) {
+          addBox(layers.walls, 0.08, 2.52, 0.16, -4.5 + i * 0.24, 4.48, 2.55, mats.timber);
+        }
+
+        // 06. WINDOWS & GLAZING WITH BRONZE MULLIONS
+        // Ground floor front glass wall
+        addBox(layers.glazing, 7.1, 2.48, 0.08, 0.85, 1.65, 2.32, mats.glass, false);
+        for (let m = 0; m <= 5; m++) {
+          addBox(layers.glazing, 0.07, 2.52, 0.14, -2.7 + m * 1.42, 1.65, 2.34, mats.mullion);
+        }
+        // Upper floor wide panoramic glazing
+        addBox(layers.glazing, 8.2, 2.42, 0.08, 1.55, 4.45, 2.25, mats.glass, false);
+        for (let m = 0; m <= 6; m++) {
+          addBox(layers.glazing, 0.07, 2.48, 0.14, -2.55 + m * 1.36, 4.45, 2.28, mats.mullion);
+        }
+        // Upper terrace glass balustrade
+        addBox(layers.glazing, 8.6, 0.72, 0.05, 1.4, 3.6, 2.82, mats.glass, false);
+        addBox(layers.glazing, 8.6, 0.05, 0.07, 1.4, 3.97, 2.82, mats.mullion);
+
+        // 07. ROOF STRUCTURE & SKYLIGHT PARAPET
+        addBox(layers.roof, 11.8, 0.42, 7.0, 0.5, 5.95, -0.3, mats.concrete);
+        addBox(layers.roof, 11.8, 0.24, 0.26, 0.5, 6.26, 3.07, mats.concrete);
+        addBox(layers.roof, 11.8, 0.24, 0.26, 0.5, 6.26, -3.67, mats.concrete);
+        addBox(layers.roof, 0.26, 0.24, 6.6, -5.27, 6.26, -0.3, mats.concrete);
+        addBox(layers.roof, 0.26, 0.24, 6.6, 6.27, 6.26, -0.3, mats.concrete);
+        // Architectural skylight frame on roof
+        addBox(layers.roof, 3.2, 0.22, 2.0, -0.4, 6.24, -0.5, mats.mullion);
+        addBox(layers.roof, 2.9, 0.06, 1.7, -0.4, 6.32, -0.5, mats.glass, false);
+
+        // NATURAL LANDSCAPING (Minimalist architectural trees & pavers)
+        function addArchTree(tx, tz, scale) {
+          const g = new THREE.Group();
+          const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.08 * scale, 0.12 * scale, 1.4 * scale, 7), mats.trunk);
+          trunk.position.y = 0.7 * scale;
+          trunk.castShadow = true;
+          g.add(trunk);
+
+          const crown1 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.75 * scale, 1), mats.foliage);
+          crown1.position.set(0, 1.8 * scale, 0);
+          crown1.scale.set(1.15, 0.85, 1.1);
+          crown1.castShadow = true;
+          g.add(crown1);
+
+          const crown2 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.55 * scale, 1), mats.foliage);
+          crown2.position.set(0.45 * scale, 1.55 * scale, 0.2 * scale);
+          crown2.castShadow = true;
+          g.add(crown2);
+
+          g.position.set(tx, 0, tz);
+          layers.landscape.add(g);
+        }
+
+        addArchTree(-6.2, 3.3, 1.15);
+        addArchTree(-6.6, -1.8, 1.35);
+        addArchTree(6.4, 2.7, 1.05);
+        addArchTree(6.2, -2.9, 1.25);
+
+        // Low architectural planter beds
+        addBox(layers.landscape, 3.2, 0.35, 1.2, -4.6, 0.17, 4.2, mats.concrete);
+        addBox(layers.landscape, 2.9, 0.26, 0.9, -4.6, 0.38, 4.2, mats.foliage);
+
+        return { root, layers, mats, waterMesh };
+      }
+
+      // ----------------------------------------------------------------------
+      // 1. HERO INTERACTIVE 3D ARCHITECTURAL SCENE
+      // ----------------------------------------------------------------------
+      function initHero3D() {
+        const canvas = document.getElementById('hero-3d-canvas');
+        const fallbackImg = document.getElementById('hero-fallback-img');
+        if (!canvas || !webglSupported) {
+          return;
+        }
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !isCompactDevice, alpha: false, powerPreference: 'high-performance' });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCompactDevice ? 1.25 : 1.75));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.05;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1f2226);
+        scene.fog = new THREE.FogExp2(0x1f2226, 0.018);
+
+        const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 120);
+        // Ground plane extending cleanly into fog
+        const groundPlane = new THREE.Mesh(
+          new THREE.PlaneGeometry(110, 110),
+          new THREE.MeshStandardMaterial({ color: 0x262623, roughness: 0.94, metalness: 0.02 })
+        );
+        groundPlane.rotation.x = -Math.PI / 2;
+        groundPlane.position.y = -0.45;
+        groundPlane.receiveShadow = true;
+        scene.add(groundPlane);
+
+        const villa = buildLayeredArchitecturalVilla(false);
+        // Offset slightly right on desktop so the building balances the left hero typography
+        villa.root.position.set(window.innerWidth >= 1024 ? 2.2 : 0, -0.3, 0);
+        scene.add(villa.root);
+
+        // Lighting rig
+        const hemiLight = new THREE.HemisphereLight(0xffe9d0, 0x262623, 0.55);
+        scene.add(hemiLight);
+
+        const sunLight = new THREE.DirectionalLight(0xffcfa0, 1.65);
+        sunLight.position.set(14, 13, 12);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = isCompactDevice ? 1024 : 2048;
+        sunLight.shadow.mapSize.height = isCompactDevice ? 1024 : 2048;
+        sunLight.shadow.camera.near = 2;
+        sunLight.shadow.camera.far = 48;
+        const d = 14;
+        sunLight.shadow.camera.left = -d;
+        sunLight.shadow.camera.right = d;
+        sunLight.shadow.camera.top = d;
+        sunLight.shadow.camera.bottom = -d;
+        sunLight.shadow.bias = -0.0004;
+        scene.add(sunLight);
+
+        const interiorLight1 = new THREE.PointLight(0xffb86b, 1.4, 16);
+        interiorLight1.position.set(2.2, 1.8, 0.5);
+        scene.add(interiorLight1);
+
+        const interiorLight2 = new THREE.PointLight(0xffc98b, 1.2, 16);
+        interiorLight2.position.set(2.6, 4.6, 0.5);
+        scene.add(interiorLight2);
+
+        const LIGHT_PRESETS = {
+          daylight: {
+            bg: new THREE.Color(0xc9d0d6),
+            sunColor: new THREE.Color(0xfff7eb),
+            sunIntensity: 1.85,
+            sunPos: new THREE.Vector3(12, 20, 14),
+            hemiIntensity: 0.9,
+            interior: 0.35,
+            glow: 0.15,
+          },
+          golden: {
+            bg: new THREE.Color(0x282522),
+            sunColor: new THREE.Color(0xffbe7d),
+            sunIntensity: 1.7,
+            sunPos: new THREE.Vector3(16, 10, 11),
+            hemiIntensity: 0.58,
+            interior: 1.45,
+            glow: 0.55,
+          },
+          twilight: {
+            bg: new THREE.Color(0x161922),
+            sunColor: new THREE.Color(0x7c93b8),
+            sunIntensity: 0.72,
+            sunPos: new THREE.Vector3(-12, 11, 10),
+            hemiIntensity: 0.38,
+            interior: 2.35,
+            glow: 0.95,
+          },
+        };
+
+        let targetPreset = LIGHT_PRESETS.golden;
+        const currentBg = targetPreset.bg.clone();
+        const currentSunColor = targetPreset.sunColor.clone();
+
+        // Three-quarter architectural camera state
+        const DEFAULT_THETA = 0.64;
+        const DEFAULT_PHI = 1.26;
+        const DEFAULT_RADIUS = 19.5;
+        let targetTheta = DEFAULT_THETA, currentTheta = DEFAULT_THETA;
+        let targetPhi = DEFAULT_PHI, currentPhi = DEFAULT_PHI;
+        let targetRadius = DEFAULT_RADIUS, currentRadius = DEFAULT_RADIUS;
+        let mouseOffsetX = 0, mouseOffsetY = 0;
+
+        // Drag to orbit (never hijacks page wheel scrolling)
+        let dragging = false, lastX = 0, lastY = 0;
+        const wrapper = document.getElementById('hero-3d-wrapper');
+        wrapper.addEventListener('pointerdown', function (e) {
+          dragging = true;
+          lastX = e.clientX;
+          lastY = e.clientY;
+        });
+        window.addEventListener('pointermove', function (e) {
+          if (dragging) {
+            const dx = e.clientX - lastX;
+            const dy = e.clientY - lastY;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            targetTheta -= dx * 0.0045;
+            targetPhi = Math.max(0.85, Math.min(1.44, targetPhi - dy * 0.0035));
+          } else if (!prefersReducedMotion) {
+            const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+            const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+            mouseOffsetX = nx * 0.14;
+            mouseOffsetY = ny * 0.06;
+          }
+        }, { passive: true });
+        window.addEventListener('pointerup', function () { dragging = false; });
+
+        // Prevent 3D orbit drag when clicking on the control panel
+        const heroControlsEl = document.getElementById('hero-3d-controls');
+        if (heroControlsEl) {
+          heroControlsEl.addEventListener('pointerdown', function (e) {
+            e.stopPropagation();
+          });
+          heroControlsEl.addEventListener('mousedown', function (e) {
+            e.stopPropagation();
+          });
+        }
+
+        // Lighting preset buttons
+        document.querySelectorAll('[data-hero-light]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const key = btn.getAttribute('data-hero-light');
+            if (LIGHT_PRESETS[key]) targetPreset = LIGHT_PRESETS[key];
+            document.querySelectorAll('[data-hero-light]').forEach(function (b) {
+              const sel = b === btn;
+              b.className = sel
+                ? 'hero-light-btn is-selected cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
+                : 'hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75';
+            });
+          });
+        });
+
+        // Architectural Wireframe mode toggle
+        let isHeroWireframe = false;
+        const heroWireframeBtn = document.getElementById('hero-wireframe-toggle');
+        if (heroWireframeBtn) {
+          heroWireframeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            isHeroWireframe = !isHeroWireframe;
+            villa.root.traverse(function (child) {
+              if (child.isMesh && child.material) {
+                if (Array.isArray(child.material)) {
+                  child.material.forEach(function (m) {
+                    m.wireframe = isHeroWireframe;
+                    m.needsUpdate = true;
+                  });
+                } else {
+                  child.material.wireframe = isHeroWireframe;
+                  child.material.needsUpdate = true;
+                }
+              }
+            });
+            heroWireframeBtn.className = isHeroWireframe
+              ? 'cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
+              : 'cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75';
+          });
+        }
+
+        const heroZoomIn = document.getElementById('hero-zoom-in');
+        if (heroZoomIn) {
+          heroZoomIn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            targetRadius = Math.max(10, targetRadius - 3.2);
+          });
+        }
+        const heroZoomOut = document.getElementById('hero-zoom-out');
+        if (heroZoomOut) {
+          heroZoomOut.addEventListener('click', function (e) {
+            e.stopPropagation();
+            targetRadius = Math.min(32, targetRadius + 3.2);
+          });
+        }
+        const heroResetCam = document.getElementById('hero-reset-cam');
+        if (heroResetCam) {
+          heroResetCam.addEventListener('click', function (e) {
+            e.stopPropagation();
+            targetTheta = DEFAULT_THETA;
+            targetPhi = DEFAULT_PHI;
+            targetRadius = DEFAULT_RADIUS;
+          });
+        }
+
+        function resizeHero() {
+          const rect = wrapper.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          camera.aspect = rect.width / rect.height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(rect.width, rect.height, false);
+          villa.root.position.x = window.innerWidth >= 1024 ? 2.2 : 0;
+        }
+        window.addEventListener('resize', resizeHero);
+        if ('ResizeObserver' in window) {
+          new ResizeObserver(resizeHero).observe(wrapper);
+        }
+        resizeHero();
+
+        // Pause rendering when hero is off-screen
+        let heroVisible = true;
+        if ('IntersectionObserver' in window) {
+          const heroObs = new IntersectionObserver(function (entries) {
+            heroVisible = entries[0].isIntersecting;
+          }, { threshold: 0.02 });
+          heroObs.observe(document.getElementById('home'));
+        }
+
+        // Hide fallback & loader once first frame renders
+        let firstRendered = false;
+        const lookTarget = new THREE.Vector3(0.4, 2.2, 0);
+
+        function animateHero() {
+          window.requestAnimationFrame(animateHero);
+          if (!heroVisible) return;
+
+          const scrollRatio = Math.min(1, (window.scrollY || 0) / Math.max(1, window.innerHeight));
+          const scrollThetaOffset = prefersReducedMotion ? 0 : scrollRatio * 0.24;
+          const scrollLift = prefersReducedMotion ? 0 : scrollRatio * 1.4;
+
+          currentTheta += (targetTheta + mouseOffsetX + scrollThetaOffset - currentTheta) * 0.055;
+          currentPhi += (targetPhi + mouseOffsetY - currentPhi) * 0.055;
+          currentRadius += (targetRadius - currentRadius) * 0.06;
+
+          camera.position.x = lookTarget.x + currentRadius * Math.sin(currentPhi) * Math.sin(currentTheta);
+          camera.position.y = lookTarget.y + currentRadius * Math.cos(currentPhi) + scrollLift;
+          camera.position.z = lookTarget.z + currentRadius * Math.sin(currentPhi) * Math.cos(currentTheta);
+          camera.lookAt(lookTarget);
+
+          // Smooth lighting interpolation
+          currentBg.lerp(targetPreset.bg, 0.045);
+          scene.background.copy(currentBg);
+          scene.fog.color.copy(currentBg);
+          currentSunColor.lerp(targetPreset.sunColor, 0.05);
+          sunLight.color.copy(currentSunColor);
+          sunLight.intensity += (targetPreset.sunIntensity - sunLight.intensity) * 0.05;
+          sunLight.position.lerp(targetPreset.sunPos, 0.05);
+          hemiLight.intensity += (targetPreset.hemiIntensity - hemiLight.intensity) * 0.05;
+          interiorLight1.intensity += (targetPreset.interior - interiorLight1.intensity) * 0.05;
+          interiorLight2.intensity += (targetPreset.interior * 0.85 - interiorLight2.intensity) * 0.05;
+          villa.mats.interiorGlow.emissiveIntensity += (targetPreset.glow - villa.mats.interiorGlow.emissiveIntensity) * 0.05;
+
+          renderer.render(scene, camera);
+
+          if (!firstRendered) {
+            firstRendered = true;
+            if (fallbackImg) fallbackImg.classList.add('opacity-0', 'pointer-events-none');
+          }
+        }
+        animateHero();
+      }
+
+      // ----------------------------------------------------------------------
+      // 2. EXPLODED 3D ARCHITECTURAL STRUCTURE ENGINE
+      // ----------------------------------------------------------------------
+      function initExploded3D() {
+        const canvas = document.getElementById('exploded-3d-canvas');
+        const fallbackEl = document.getElementById('exploded-fallback');
+        const layerListEl = document.getElementById('exploded-layer-list');
+        const sliderEl = document.getElementById('exploded-slider');
+        const percentEl = document.getElementById('exploded-percent');
+        const stageLabelEl = document.getElementById('exploded-stage-label');
+        const playBtn = document.getElementById('exploded-play-btn');
+        const resetBtn = document.getElementById('exploded-reset-btn');
+        const showAllBtn = document.getElementById('exploded-show-all-btn');
+        const scrollSyncBtn = document.getElementById('exploded-scroll-sync-btn');
+
+        let selectedLayerId = null;
+        let targetExplode = 0;
+        let currentExplode = 0;
+        let scrollSyncEnabled = !prefersReducedMotion;
+        let sequenceActive = false;
+        let sequenceStart = 0;
+
+        function updateLayerDetails(layerId) {
+          const codeEl = document.getElementById('layer-detail-code');
+          const titleEl = document.getElementById('layer-detail-title');
+          const descEl = document.getElementById('layer-detail-desc');
+          const found = EXPLODED_LAYERS.find(function (l) { return l.id === layerId; });
+          if (found) {
+            codeEl.textContent = found.code;
+            titleEl.textContent = found.title;
+            descEl.textContent = found.desc;
+          } else {
+            codeEl.textContent = 'Complete Assembly';
+            titleEl.textContent = 'Integrated Structural System';
+            descEl.textContent = 'Every residential and commercial project coordinates foundation engineering, primary structure, enclosure walls, glazing and roof geometry as a single unified system. Select any layer above to isolate and inspect it.';
+          }
+        }
+
+        function renderLayerList() {
+          if (!layerListEl) return;
+          layerListEl.innerHTML = EXPLODED_LAYERS.map(function (layer) {
+            const active = selectedLayerId === layer.id;
+            return (
+              '<button type="button" role="option" aria-selected="' + active + '" data-layer-id="' + layer.id + '" class="w-full flex items-center justify-between px-3.5 py-2.5 text-left border transition-colors min-h-[42px] ' +
+              (active
+                ? 'bg-[#EDE9E0] text-[#22221F] border-[#EDE9E0]'
+                : 'bg-transparent text-[#EDE9E0]/85 border-[#EDE9E0]/12 hover:border-[#B5A48A]') +
+              '">' +
+              '<span class="text-xs sm:text-[13px] font-medium">' + layer.title + '</span>' +
+              '<span class="text-[10px] tracking-[0.16em] uppercase ' + (active ? 'text-[#22221F]/70' : 'text-[#B5A48A]') + '">' + layer.code.split(' ')[0] + '</span>' +
+              '</button>'
+            );
+          }).join('');
+        }
+
+        renderLayerList();
+
+        if (layerListEl) {
+          layerListEl.addEventListener('click', function (e) {
+            const btn = e.target.closest('[data-layer-id]');
+            if (!btn) return;
+            const id = btn.getAttribute('data-layer-id');
+            selectedLayerId = selectedLayerId === id ? null : id;
+            if (selectedLayerId && targetExplode < 0.55) {
+              scrollSyncEnabled = false;
+              updateScrollSyncUi();
+              targetExplode = 0.78;
+              if (sliderEl) sliderEl.value = '78';
+            }
+            renderLayerList();
+            updateLayerDetails(selectedLayerId);
+          });
+        }
+
+        function updateScrollSyncUi() {
+          if (!scrollSyncBtn) return;
+          scrollSyncBtn.textContent = 'Scroll Sync: ' + (scrollSyncEnabled ? 'On' : 'Off');
+          scrollSyncBtn.setAttribute('aria-pressed', String(scrollSyncEnabled));
+          scrollSyncBtn.classList.toggle('border-[#B5A48A]/60', scrollSyncEnabled);
+          scrollSyncBtn.classList.toggle('border-[#EDE9E0]/20', !scrollSyncEnabled);
+        }
+        updateScrollSyncUi();
+
+        if (!canvas || !webglSupported) {
+          if (fallbackEl) fallbackEl.classList.remove('hidden');
+          return;
+        }
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !isCompactDevice, alpha: false });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCompactDevice ? 1.25 : 1.75));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a17);
+
+        const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+        const villa = buildLayeredArchitecturalVilla(false);
+        villa.layers.landscape.visible = false; // Keep structural anatomy crystal clear
+        villa.root.position.set(0, -2.1, 0);
+        scene.add(villa.root);
+
+        // Subtle architectural blueprint grid floor under exploded model
+        const gridHelper = new THREE.GridHelper(24, 24, 0x6b6152, 0x2f2d28);
+        gridHelper.position.y = -2.6;
+        scene.add(gridHelper);
+
+        scene.add(new THREE.HemisphereLight(0xf6f0e4, 0x2a2924, 0.75));
+        const keyLight = new THREE.DirectionalLight(0xfff1dc, 1.35);
+        keyLight.position.set(14, 22, 16);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
+        scene.add(keyLight);
+
+        const rimLight = new THREE.DirectionalLight(0xb5a48a, 0.55);
+        rimLight.position.set(-14, 10, -12);
+        scene.add(rimLight);
+
+        // Camera orbit controls
+        const DEFAULT_THETA = 0.72, DEFAULT_PHI = 1.12, DEFAULT_RAD = 22.5;
+        let tTheta = DEFAULT_THETA, cTheta = DEFAULT_THETA;
+        let tPhi = DEFAULT_PHI, cPhi = DEFAULT_PHI;
+        let tRad = DEFAULT_RAD, cRad = DEFAULT_RAD;
+        let dragging = false, lx = 0, ly = 0;
+
+        canvas.addEventListener('pointerdown', function (e) { dragging = true; lx = e.clientX; ly = e.clientY; });
+        window.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          tTheta -= (e.clientX - lx) * 0.0055;
+          tPhi = Math.max(0.62, Math.min(1.42, tPhi - (e.clientY - ly) * 0.0045));
+          lx = e.clientX; ly = e.clientY;
+        }, { passive: true });
+        window.addEventListener('pointerup', function () { dragging = false; });
+
+        if (sliderEl) {
+          sliderEl.addEventListener('input', function () {
+            sequenceActive = false;
+            scrollSyncEnabled = false;
+            updateScrollSyncUi();
+            targetExplode = Number(sliderEl.value) / 100;
+          });
+        }
+
+        if (scrollSyncBtn) {
+          scrollSyncBtn.addEventListener('click', function () {
+            scrollSyncEnabled = !scrollSyncEnabled;
+            sequenceActive = false;
+            updateScrollSyncUi();
+          });
+        }
+
+        if (playBtn) {
+          playBtn.addEventListener('click', function () {
+            scrollSyncEnabled = false;
+            updateScrollSyncUi();
+            selectedLayerId = null;
+            renderLayerList();
+            updateLayerDetails(null);
+            sequenceActive = true;
+            sequenceStart = performance.now();
+          });
+        }
+
+        function resetExplodedView() {
+          sequenceActive = false;
+          selectedLayerId = null;
+          targetExplode = 0;
+          if (sliderEl) sliderEl.value = '0';
+          tTheta = DEFAULT_THETA;
+          tPhi = DEFAULT_PHI;
+          tRad = DEFAULT_RAD;
+          renderLayerList();
+          updateLayerDetails(null);
+        }
+
+        if (resetBtn) resetBtn.addEventListener('click', resetExplodedView);
+        if (showAllBtn) {
+          showAllBtn.addEventListener('click', function () {
+            selectedLayerId = null;
+            renderLayerList();
+            updateLayerDetails(null);
+          });
+        }
+
+        function resizeExploded() {
+          const parent = canvas.parentElement;
+          if (!parent) return;
+          const rect = parent.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          camera.aspect = rect.width / rect.height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(rect.width, rect.height, false);
+        }
+        window.addEventListener('resize', resizeExploded);
+        if ('ResizeObserver' in window && canvas.parentElement) {
+          new ResizeObserver(resizeExploded).observe(canvas.parentElement);
+        }
+        resizeExploded();
+
+        // Pause rendering when off-screen
+        let explodedVisible = false;
+        const structureSection = document.getElementById('structure');
+        if ('IntersectionObserver' in window && structureSection) {
+          const obs = new IntersectionObserver(function (entries) {
+            explodedVisible = entries[0].isIntersecting;
+          }, { threshold: 0.02 });
+          obs.observe(structureSection);
+        } else {
+          explodedVisible = true;
+        }
+
+        // Cache original mesh materials for layer isolation highlight
+        const layerMeshes = {};
+        EXPLODED_LAYERS.forEach(function (l) {
+          const arr = [];
+          villa.layers[l.id].traverse(function (obj) {
+            if (obj.isMesh) {
+              obj.userData.origMat = obj.material;
+              obj.userData.dimMat = obj.material.clone();
+              obj.userData.dimMat.transparent = true;
+              obj.userData.dimMat.opacity = 0.16;
+              arr.push(obj);
+            }
+          });
+          layerMeshes[l.id] = arr;
+        });
+
+        let lastAppliedSelection = undefined;
+        const lookAtVec = new THREE.Vector3(0, 1.5, 0);
+
+        function animateExploded(now) {
+          window.requestAnimationFrame(animateExploded);
+          if (!explodedVisible) return;
+
+          // Scroll-controlled natural separation (never hijacks scrolling)
+          if (scrollSyncEnabled && !sequenceActive && structureSection) {
+            const rect = structureSection.getBoundingClientRect();
+            const vh = window.innerHeight || 800;
+            // Progress 0 as section enters -> 1 at center -> gently eases back
+            const raw = (vh * 0.78 - rect.top) / (vh * 0.95);
+            const clamped = Math.max(0, Math.min(1, raw));
+            targetExplode = clamped;
+            if (sliderEl) sliderEl.value = String(Math.round(clamped * 100));
+          }
+
+          // Automated 5-phase architectural sequence: Complete -> Separate -> Hold -> Reconstruct
+          if (sequenceActive) {
+            const elapsed = (now - sequenceStart) / 1000;
+            if (elapsed < 2.4) {
+              targetExplode = elapsed / 2.4;
+            } else if (elapsed < 4.2) {
+              targetExplode = 1;
+            } else if (elapsed < 6.4) {
+              targetExplode = 1 - (elapsed - 4.2) / 2.2;
+            } else {
+              targetExplode = 0;
+              sequenceActive = false;
+            }
+            if (sliderEl) sliderEl.value = String(Math.round(targetExplode * 100));
+          }
+
+          currentExplode += (targetExplode - currentExplode) * 0.085;
+          const pct = Math.round(currentExplode * 100);
+          if (percentEl) percentEl.textContent = pct + '%';
+          if (stageLabelEl) {
+            stageLabelEl.textContent = pct < 12 ? 'Complete Structure' : pct < 75 ? 'Separating Structural Layers' : 'Exploded Architectural Anatomy';
+          }
+
+          // Vertically separate each structural layer cleanly
+          EXPLODED_LAYERS.forEach(function (l) {
+            villa.layers[l.id].position.y = l.offset * currentExplode;
+          });
+
+          // Highlight selected layer if changed
+          if (selectedLayerId !== lastAppliedSelection) {
+            lastAppliedSelection = selectedLayerId;
+            EXPLODED_LAYERS.forEach(function (l) {
+              const isFocused = !selectedLayerId || selectedLayerId === l.id;
+              layerMeshes[l.id].forEach(function (m) {
+                m.material = isFocused ? m.userData.origMat : m.userData.dimMat;
+              });
+            });
+          }
+
+          // Smooth camera framing to keep exploded stack centered
+          const targetLookY = 1.0 + currentExplode * 2.55;
+          const desiredRad = tRad + currentExplode * 4.2;
+          cTheta += (tTheta - cTheta) * 0.07;
+          cPhi += (tPhi - cPhi) * 0.07;
+          cRad += (desiredRad - cRad) * 0.07;
+          lookAtVec.y += (targetLookY - lookAtVec.y) * 0.08;
+
+          camera.position.x = lookAtVec.x + cRad * Math.sin(cPhi) * Math.sin(cTheta);
+          camera.position.y = lookAtVec.y + cRad * Math.cos(cPhi);
+          camera.position.z = lookAtVec.z + cRad * Math.sin(cPhi) * Math.cos(cTheta);
+          camera.lookAt(lookAtVec);
+
+          renderer.render(scene, camera);
+        }
+        window.requestAnimationFrame(animateExploded);
+      }
+
+      // ----------------------------------------------------------------------
+      // 3. TRANSFORMATION STAGE 03 — LIVE 3D CLAY STRUCTURAL MODEL
+      // ----------------------------------------------------------------------
+      function initTransform3DScene() {
+        if (transform3dController) return;
+        const canvas = document.getElementById('transform-3d-canvas');
+        if (!canvas || !webglSupported) return;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.shadowMap.enabled = true;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xeae5dc);
+
+        const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+        const clayVilla = buildLayeredArchitecturalVilla(true);
+        clayVilla.root.position.set(0, -1.2, 0);
+        scene.add(clayVilla.root);
+
+        scene.add(new THREE.HemisphereLight(0xffffff, 0xc9c2b6, 0.85));
+        const sun = new THREE.DirectionalLight(0xfff9f0, 1.15);
+        sun.position.set(14, 18, 12);
+        sun.castShadow = true;
+        scene.add(sun);
+
+        let running = true;
+        let angle = 0.65;
+
+        function resize() {
+          const rect = canvas.parentElement.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          camera.aspect = rect.width / rect.height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(rect.width, rect.height, false);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function loop() {
+          window.requestAnimationFrame(loop);
+          if (!running) return;
+          if (!prefersReducedMotion) angle += 0.0022;
+          camera.position.set(Math.sin(angle) * 19, 8.5, Math.cos(angle) * 19);
+          camera.lookAt(0, 1.6, 0);
+          renderer.render(scene, camera);
+        }
+        loop();
+
+        transform3dController = {
+          pause: function () { running = false; },
+          resume: function () { running = true; resize(); },
+        };
+      }
+
+      // ----------------------------------------------------------------------
+      // 4. PROJECT MODAL INTERACTIVE 3D DEMONSTRATION MODEL
+      // ----------------------------------------------------------------------
+      function initModal3DScene(modelType) {
+        const canvas = document.getElementById('pm-3d-canvas');
+        if (!canvas || !webglSupported) return;
+
+        if (!modal3dController) {
+          const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+          renderer.shadowMap.enabled = true;
+
+          const scene = new THREE.Scene();
+          scene.background = new THREE.Color(0x1e1e1b);
+
+          const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+          scene.add(new THREE.HemisphereLight(0xf6efe2, 0x2a2924, 0.78));
+          const dir = new THREE.DirectionalLight(0xffe6c7, 1.45);
+          dir.position.set(12, 18, 14);
+          dir.castShadow = true;
+          scene.add(dir);
+
+          const modelHolder = new THREE.Group();
+          scene.add(modelHolder);
+
+          const grid = new THREE.GridHelper(22, 22, 0x6b6152, 0x2f2d28);
+          grid.position.y = -2.2;
+          scene.add(grid);
+
+          let theta = 0.68, phi = 1.15, dragging = false, lx = 0, ly = 0;
+          let running = true;
+
+          canvas.addEventListener('pointerdown', function (e) { dragging = true; lx = e.clientX; ly = e.clientY; });
+          window.addEventListener('pointermove', function (e) {
+            if (!dragging || !running) return;
+            theta -= (e.clientX - lx) * 0.006;
+            phi = Math.max(0.7, Math.min(1.4, phi - (e.clientY - ly) * 0.005));
+            lx = e.clientX; ly = e.clientY;
+          }, { passive: true });
+          window.addEventListener('pointerup', function () { dragging = false; });
+
+          function resize() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+            camera.aspect = rect.width / rect.height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(rect.width, rect.height, false);
+          }
+          window.addEventListener('resize', resize);
+
+          function buildTypology(type) {
+            while (modelHolder.children.length) modelHolder.remove(modelHolder.children[0]);
+            const built = buildLayeredArchitecturalVilla(false);
+            built.root.position.set(0, -1.75, 0);
+            if (type === 'commercial') {
+              built.root.scale.set(1.1, 1.35, 1.05);
+            } else if (type === 'townhouse') {
+              built.root.scale.set(0.72, 1.42, 0.9);
+            } else if (type === 'interior') {
+              built.layers.roof.visible = false;
+              built.layers.landscape.visible = false;
+              built.root.scale.set(1.05, 0.95, 1.05);
+            }
+            modelHolder.add(built.root);
+          }
+
+          function loop() {
+            window.requestAnimationFrame(loop);
+            if (!running) return;
+            const r = 19;
+            camera.position.set(
+              r * Math.sin(phi) * Math.sin(theta),
+              1.0 + r * Math.cos(phi),
+              r * Math.sin(phi) * Math.cos(theta)
+            );
+            camera.lookAt(0, 1.0, 0);
+            renderer.render(scene, camera);
+          }
+          loop();
+
+          modal3dController = {
+            load: function (type) {
+              buildTypology(type);
+              running = true;
+              window.setTimeout(resize, 30);
+            },
+            pause: function () { running = false; },
+          };
+        }
+
+        modal3dController.load(modelType);
+      }
+
+      // ----------------------------------------------------------------------
+      // BOOTSTRAP
+      // ----------------------------------------------------------------------
+      document.getElementById('footer-year').textContent = String(new Date().getFullYear());
+      if (window.lucide) window.lucide.createIcons();
+
+      // Priority-load Hero 3D, lazy-initialize lower-page Exploded 3D
+      initHero3D();
+      window.setTimeout(initExploded3D, 180);
+    })();
+  </script>
+</body>
+
+</html>

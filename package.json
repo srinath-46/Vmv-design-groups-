@@ -1,0 +1,10 @@
+{
+  "name": "vmv-design-groups-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx vercel dev",
+    "preview": "npx serve ."
+  }
+}
