@@ -471,9 +471,10 @@
         class="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700" />
 
       <!-- Live Three.js 3D Architectural Canvas -->
-      <div id="hero-3d-wrapper" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+      <div id="hero-3d-wrapper" class="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing select-none"
+        style="touch-action: none;"
         aria-label="Interactive 3D architectural building model. Drag to orbit or use the lighting and view controls.">
-        <canvas id="hero-3d-canvas" class="w-full h-full block"></canvas>
+        <canvas id="hero-3d-canvas" class="w-full h-full block" style="touch-action: none;"></canvas>
       </div>
 
 
@@ -521,56 +522,56 @@
         </div>
       </div>
 
-      <!-- Subtle Interactive 3D Hero Controls (Bottom Right) -->
+      <!-- Responsive Interactive 3D Hero Controls (Visible on all screens) -->
       <div id="hero-3d-controls"
-        class="hidden sm:flex absolute bottom-6 right-6 lg:right-10 z-30 pointer-events-auto items-center gap-2 bg-[#22221F]/90 border border-[#EDE9E0]/25 px-3 py-2 text-[10px] tracking-[0.15em] uppercase text-[#EDE9E0] shadow-2xl select-none">
-        <span class="text-[#B5A48A] pr-2 border-r border-[#EDE9E0]/18 hidden md:inline">
-          3D Architectural Study · Drag to Orbit
+        class="flex flex-nowrap absolute bottom-3 sm:bottom-6 right-2 sm:right-6 lg:right-10 max-w-[calc(100vw-1rem)] z-30 pointer-events-auto items-center gap-1 sm:gap-2 bg-[#1A1917]/95 border border-[#EDE9E0]/30 px-2 sm:px-3 py-1.5 text-[10px] sm:text-[11px] tracking-[0.14em] uppercase text-[#EDE9E0] shadow-2xl select-none backdrop-blur-md overflow-x-auto whitespace-nowrap scrollbar-none">
+        <span class="text-[#B5A48A] pr-2 border-r border-[#EDE9E0]/20 hidden xl:inline shrink-0">
+          3D Study · Drag to Orbit
         </span>
-        <div class="inline-flex items-center gap-1" role="group" aria-label="Lighting environment">
+        <div class="inline-flex items-center gap-0.5 sm:gap-1 shrink-0" role="group" aria-label="Lighting environment">
           <button type="button" data-hero-light="daylight"
-            class="hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
+            class="hero-light-btn cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
             Daylight
           </button>
           <button type="button" data-hero-light="golden"
-            class="hero-light-btn is-selected cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium">
-            Golden Hour
+            class="hero-light-btn is-selected cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium">
+            Golden
           </button>
           <button type="button" data-hero-light="twilight"
-            class="hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
+            class="hero-light-btn cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75">
             Twilight
           </button>
         </div>
-        <div class="inline-flex items-center gap-1 pl-2 border-l border-[#EDE9E0]/18">
+        <div class="inline-flex items-center gap-1 pl-1 sm:pl-2 border-l border-[#EDE9E0]/20 shrink-0">
           <button id="hero-wireframe-toggle" type="button"
-            class="cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75"
+            class="cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75 font-medium"
             title="Toggle architectural wireframe mode">
             Wireframe
           </button>
         </div>
-        <div class="inline-flex items-center gap-1 pl-2 border-l border-[#EDE9E0]/18">
+        <div class="inline-flex items-center gap-0.5 sm:gap-1 pl-1 sm:pl-2 border-l border-[#EDE9E0]/20 shrink-0">
           <button id="hero-zoom-in" type="button" aria-label="Zoom in 3D building"
-            class="cursor-pointer w-7 h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
+            class="cursor-pointer w-6 h-6 sm:w-7 sm:h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
             title="Zoom in">
             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
           </button>
           <button id="hero-zoom-out" type="button" aria-label="Zoom out 3D building"
-            class="cursor-pointer w-7 h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
+            class="cursor-pointer w-6 h-6 sm:w-7 sm:h-7 inline-flex items-center justify-center hover:bg-[#EDE9E0]/15 transition-colors"
             title="Zoom out">
             <i data-lucide="minus" class="w-3.5 h-3.5"></i>
           </button>
           <button id="hero-reset-cam" type="button" aria-label="Reset 3D camera view"
-            class="cursor-pointer px-2 h-7 inline-flex items-center gap-1 hover:bg-[#EDE9E0]/15 transition-colors"
+            class="cursor-pointer px-1.5 sm:px-2 h-6 sm:h-7 inline-flex items-center gap-1 hover:bg-[#EDE9E0]/15 transition-colors text-[10px]"
             title="Reset perspective">
             <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-            <span class="hidden xl:inline">Reset</span>
+            <span class="hidden sm:inline">Reset</span>
           </button>
         </div>
       </div>
 
       <!-- Subtle Scroll Indicator -->
       <button type="button" data-scroll-to="about" aria-label="Scroll to About section"
-        class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 inline-flex flex-col items-center gap-1 text-[#EDE9E0]/80 hover:text-[#FFFFFF] transition-colors p-2">
+        class="hidden md:inline-flex absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-1 text-[#EDE9E0]/80 hover:text-[#FFFFFF] transition-colors p-2">
         <span class="text-[10px] tracking-[0.28em] uppercase">Scroll</span>
         <i data-lucide="chevron-down" class="w-4 h-4 text-[#B5A48A] vmv-scroll-cue"></i>
       </button>
@@ -2985,35 +2986,43 @@
         const DEFAULT_THETA = 0.64;
         const DEFAULT_PHI = 1.26;
         const DEFAULT_RADIUS = 19.5;
+        let baseRadius = DEFAULT_RADIUS;
         let targetTheta = DEFAULT_THETA, currentTheta = DEFAULT_THETA;
         let targetPhi = DEFAULT_PHI, currentPhi = DEFAULT_PHI;
         let targetRadius = DEFAULT_RADIUS, currentRadius = DEFAULT_RADIUS;
         let mouseOffsetX = 0, mouseOffsetY = 0;
+        const lookTarget = new THREE.Vector3(0.4, 2.2, 0);
 
-        // Drag to orbit (never hijacks page wheel scrolling)
+        // Drag to orbit (smooth mouse and mobile touch support)
         let dragging = false, lastX = 0, lastY = 0;
         const wrapper = document.getElementById('hero-3d-wrapper');
         wrapper.addEventListener('pointerdown', function (e) {
           dragging = true;
           lastX = e.clientX;
           lastY = e.clientY;
+          try { wrapper.setPointerCapture(e.pointerId); } catch (_) {}
         });
-        window.addEventListener('pointermove', function (e) {
+        wrapper.addEventListener('pointermove', function (e) {
           if (dragging) {
             const dx = e.clientX - lastX;
             const dy = e.clientY - lastY;
             lastX = e.clientX;
             lastY = e.clientY;
-            targetTheta -= dx * 0.0045;
-            targetPhi = Math.max(0.85, Math.min(1.44, targetPhi - dy * 0.0035));
-          } else if (!prefersReducedMotion) {
+            targetTheta -= dx * 0.0055;
+            targetPhi = Math.max(0.80, Math.min(1.48, targetPhi - dy * 0.0042));
+          } else if (!prefersReducedMotion && window.innerWidth >= 1024) {
             const nx = (e.clientX / window.innerWidth - 0.5) * 2;
             const ny = (e.clientY / window.innerHeight - 0.5) * 2;
             mouseOffsetX = nx * 0.14;
             mouseOffsetY = ny * 0.06;
           }
-        }, { passive: true });
-        window.addEventListener('pointerup', function () { dragging = false; });
+        });
+        function stopDrag(e) {
+          dragging = false;
+          try { if (e && e.pointerId) wrapper.releasePointerCapture(e.pointerId); } catch (_) {}
+        }
+        wrapper.addEventListener('pointerup', stopDrag);
+        wrapper.addEventListener('pointercancel', stopDrag);
 
         // Prevent 3D orbit drag when clicking on the control panel
         const heroControlsEl = document.getElementById('hero-3d-controls');
@@ -3035,8 +3044,8 @@
             document.querySelectorAll('[data-hero-light]').forEach(function (b) {
               const sel = b === btn;
               b.className = sel
-                ? 'hero-light-btn is-selected cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
-                : 'hero-light-btn cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75';
+                ? 'hero-light-btn is-selected cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
+                : 'hero-light-btn cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75';
             });
           });
         });
@@ -3062,8 +3071,8 @@
               }
             });
             heroWireframeBtn.className = isHeroWireframe
-              ? 'cursor-pointer px-2.5 py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
-              : 'cursor-pointer px-2.5 py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75';
+              ? 'cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors bg-[#EDE9E0] text-[#22221F] font-medium'
+              : 'cursor-pointer px-2 sm:px-2.5 py-1 sm:py-1.5 transition-colors hover:text-[#FFFFFF] text-[#EDE9E0]/75 font-medium';
           });
         }
 
@@ -3071,14 +3080,14 @@
         if (heroZoomIn) {
           heroZoomIn.addEventListener('click', function (e) {
             e.stopPropagation();
-            targetRadius = Math.max(10, targetRadius - 3.2);
+            targetRadius = Math.max(baseRadius * 0.55, targetRadius - 3.2);
           });
         }
         const heroZoomOut = document.getElementById('hero-zoom-out');
         if (heroZoomOut) {
           heroZoomOut.addEventListener('click', function (e) {
             e.stopPropagation();
-            targetRadius = Math.min(32, targetRadius + 3.2);
+            targetRadius = Math.min(baseRadius * 1.6, targetRadius + 3.2);
           });
         }
         const heroResetCam = document.getElementById('hero-reset-cam');
@@ -3087,17 +3096,57 @@
             e.stopPropagation();
             targetTheta = DEFAULT_THETA;
             targetPhi = DEFAULT_PHI;
-            targetRadius = DEFAULT_RADIUS;
+            targetRadius = baseRadius;
           });
         }
 
         function resizeHero() {
           const rect = wrapper.getBoundingClientRect();
           if (!rect.width || !rect.height) return;
+          const w = window.innerWidth;
+          const h = rect.height;
           camera.aspect = rect.width / rect.height;
+
+          // Responsive architectural scaling & camera adaptation for all screen widths & heights
+          const heightRatio = h < 680 ? Math.max(0.70, h / 680) : 1.0;
+
+          if (w < 640) {
+            // Mobile: compact 36% scale, upper-half placement, wide FOV for full 360 orbit visibility
+            const s = 0.36 * heightRatio;
+            villa.root.scale.set(s, s, s);
+            villa.root.position.set(0, 1.3, 0);
+            camera.fov = 44;
+            baseRadius = 26.5;
+            lookTarget.set(0, 1.5, 0);
+          } else if (w < 1024) {
+            // Tablets & small viewports: 50% scale
+            const s = 0.50 * heightRatio;
+            villa.root.scale.set(s, s, s);
+            villa.root.position.set(0.5, 0.3, 0);
+            camera.fov = 40;
+            baseRadius = 24.0;
+            lookTarget.set(0.2, 1.8, 0);
+          } else if (w < 1440) {
+            // Standard desktop/laptops: 65% scale, positioned right to breathe & not collide with copy
+            const s = 0.65 * heightRatio;
+            villa.root.scale.set(s, s, s);
+            villa.root.position.set(2.4, -0.2, 0);
+            camera.fov = 37;
+            baseRadius = 22.0;
+            lookTarget.set(0.4, 2.0, 0);
+          } else {
+            // Large desktop screens: 74% scale
+            const s = 0.74 * heightRatio;
+            villa.root.scale.set(s, s, s);
+            villa.root.position.set(2.6, -0.3, 0);
+            camera.fov = 36;
+            baseRadius = 21.0;
+            lookTarget.set(0.4, 2.1, 0);
+          }
+
+          targetRadius = baseRadius;
           camera.updateProjectionMatrix();
           renderer.setSize(rect.width, rect.height, false);
-          villa.root.position.x = window.innerWidth >= 1024 ? 2.2 : 0;
         }
         window.addEventListener('resize', resizeHero);
         if ('ResizeObserver' in window) {
@@ -3116,7 +3165,6 @@
 
         // Hide fallback & loader once first frame renders
         let firstRendered = false;
-        const lookTarget = new THREE.Vector3(0.4, 2.2, 0);
 
         function animateHero() {
           window.requestAnimationFrame(animateHero);
