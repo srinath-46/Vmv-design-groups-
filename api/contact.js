@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     }
 
     const resendKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.CONTACT_TO_EMAIL;
+    const toEmail = process.env.CONTACT_TO_EMAIL || 'vmvnexxusdesigngroup@gmail.com';
     const fromEmail = process.env.CONTACT_FROM_EMAIL || 'VMV Design Groups <onboarding@resend.dev>';
 
     if (resendKey && toEmail) {
